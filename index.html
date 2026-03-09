@@ -165,10 +165,25 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 .sec-black { background: #000; position: relative; border-top: 1px solid var(--line); }
 
 /* 새롭게 추가된 Editorial White 섹션 */
-.sec-white { background: #ffffff; position: relative; color: #111; }
+.sec-white { background: #ffffff; position: relative; color: #111; overflow: hidden; z-index: 1; }
+.sec-white::before {
+  content: 'WHAT WE DO';
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', serif;
+  font-size: 18vw;
+  font-weight: 600;
+  color: #000;
+  opacity: 0.04;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+}
 
 .sec-header { padding: 100px 64px 60px; border-bottom: 1px solid var(--line-soft); }
-.sec-white .sec-header { border-bottom: 1px solid rgba(0,0,0,0.1); }
+.sec-white .sec-header { border-bottom: 1px solid rgba(0,0,0,0.1); position: relative; z-index: 2; }
 
 .sec-num {
   font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--gold); letter-spacing: 3px; margin-bottom: 16px;
@@ -183,71 +198,133 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 .sec-lead {
   padding: 60px 64px 0; font-size: 26px; font-weight: 300; line-height: 1.6; color: #fff; max-width: 720px; margin-bottom: 0;
 }
-.sec-white .sec-lead { color: #111; }
+.sec-white .sec-lead { color: #111; position: relative; z-index: 2; }
 
 /* Services */
 .services { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-soft); margin-top: 60px; }
-.sec-white .services { border-top: 1px solid rgba(0,0,0,0.1); }
+.sec-white .services { border-top: 1px solid rgba(0,0,0,0.1); position: relative; z-index: 2; }
 
 .svc {
   padding: 60px 48px; border-right: 1px solid var(--line-soft); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative; overflow: hidden; cursor: default;
 }
-.sec-white .svc { border-right: 1px solid rgba(0,0,0,0.1); }
+.sec-white .svc { border-right: 1px solid rgba(0,0,0,0.1); background: transparent; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1;}
 .svc::after {
   content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(140, 28, 42, 0.1)); opacity: 0; transition: opacity 0.4s; z-index: 0;
 }
 
-.sec-white .svc::after { background: linear-gradient(to bottom, transparent, rgba(140, 28, 42, 0.05)); }
+.sec-white .svc::after { display: none; }
 
 .svc:last-child { border-right: none; }
 .svc:hover { background: #0b0b0b; }
-.sec-white .svc:hover { background: rgba(0,0,0,0.02); }
+
+/* Enhanced Hover for Editorial White */
+.sec-white .svc:hover { 
+  background: var(--burgundy); 
+  transform: translateY(-12px); 
+  box-shadow: 0 20px 40px rgba(140, 28, 42, 0.2); 
+  border-color: transparent; 
+}
+
 .svc:hover::after { opacity: 1; }
 .svc * { position: relative; z-index: 1; }
 
-.svc-n { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--burgundy); letter-spacing: 2px; margin-bottom: 32px; transition: transform 0.4s ease; }
-.svc-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: #fff; line-height: 1.3; margin-bottom: 24px; transition: color 0.3s, transform 0.4s ease; }
+.svc-n { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--burgundy); letter-spacing: 2px; margin-bottom: 32px; transition: color 0.4s, transform 0.4s ease; }
+.sec-white .svc-n { font-family: 'Playfair Display', serif; font-size: 80px; font-weight: 400; font-style: italic; letter-spacing: -3px; color: rgba(140, 28, 42, 0.12); margin-bottom: 24px; line-height: 1; }
+
+.svc-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: #fff; line-height: 1.3; margin-bottom: 24px; transition: color 0.4s, transform 0.4s ease; }
 .sec-white .svc-title { color: #111; font-weight: 600; }
 
-.svc-desc { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--ink-soft); transition: transform 0.4s ease; }
+.svc-desc { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--ink-soft); transition: color 0.4s, transform 0.4s ease; }
 .sec-white .svc-desc { color: #333; }
 
 .svc:hover .svc-n, .svc:hover .svc-title, .svc:hover .svc-desc { transform: translateY(-6px); }
 .svc:hover .svc-title { color: var(--gold); }
-.sec-white .svc:hover .svc-title { color: var(--burgundy); }
 
-/* Horizontal Scroll */
-.h-scroll-sec { height: 300vh; position: relative; border-bottom: 1px solid var(--line); }
-.h-scroll-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-.h-scroll-wrap { flex: 1; width: 100%; position: relative; display: flex; align-items: center; }
-.proj-list {
-  display: flex; position: absolute; top: 50%; left: 64px; transform: translateY(-50%) translateX(0);
-  gap: 40px; padding-right: 128px; will-change: transform;
+/* Hover Text Colors for Editorial White */
+.sec-white .svc:hover .svc-n { color: rgba(255,255,255,0.25); }
+.sec-white .svc:hover .svc-title { color: #fff; }
+.sec-white .svc:hover .svc-desc { color: rgba(255,255,255,0.85); }
+
+/* Projects Slider UX & Media Container */
+.sec-burgundy { background: var(--burgundy); position: relative; border-top: 1px solid var(--line); overflow: hidden; }
+
+.projects-container { padding-bottom: 120px; }
+.proj-slider-wrap { position: relative; width: 100%; }
+
+.proj-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 64px; height: 64px;
+  border-radius: 50%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+  color: #fff; font-size: 24px; cursor: pointer; z-index: 20; backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; transition: background 0.3s, transform 0.3s;
 }
+.proj-nav:hover { background: var(--burgundy); transform: translateY(-50%) scale(1.1); border-color: transparent; }
+.proj-nav.prev { left: 24px; }
+.proj-nav.next { right: 24px; }
+
+.proj-list {
+  display: flex; gap: 40px; padding: 20px 64px 60px;
+  overflow-x: auto; scroll-behavior: smooth; cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.proj-list::-webkit-scrollbar { display: none; }
+.proj-list.dragging { scroll-behavior: auto; cursor: grabbing; }
+.proj-list.dragging .proj-item { pointer-events: none; }
+
 .proj-item {
   flex: 0 0 450px; height: 70vh; min-height: 400px; max-height: 600px; background: #000; border-radius: 12px;
-  overflow: hidden; position: relative; cursor: pointer; display: flex; flex-direction: column; justify-content: flex-end;
-  border: 1px solid rgba(255,255,255,0.05); transition: transform 0.4s ease, border-color 0.4s, box-shadow 0.4s;
+  overflow: hidden; position: relative; display: flex; flex-direction: column; justify-content: flex-end;
+  border: 1px solid rgba(255,255,255,0.08); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s, box-shadow 0.6s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  flex-shrink: 0;
 }
-.proj-item:hover { transform: translateY(-10px); border-color: #fff; box-shadow: 0 20px 40px rgba(140, 28, 42, 0.4); }
-.proj-video {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2;
-  transition: opacity 0.5s, transform 5s ease-out; z-index: 0; filter: grayscale(50%);
+.proj-item:hover { 
+  transform: translateY(-12px); 
+  border-color: rgba(255,255,255,0.3); 
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 50px rgba(140, 28, 42, 0.6); 
 }
-.proj-item:hover .proj-video { opacity: 0.7; transform: scale(1.05); filter: grayscale(0%); }
+
+/* Cinematic Light Sweep Overlay */
+.proj-item::after {
+  content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent);
+  transform: skewX(-20deg); clear: both;
+  z-index: 5; pointer-events: none;
+}
+.proj-item:hover::after {
+  animation: lightSweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes lightSweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.proj-media {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3;
+  transition: opacity 0.8s, transform 3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s; z-index: 0; filter: grayscale(40%);
+}
+.proj-item:hover .proj-media { opacity: 1; transform: scale(1.05); filter: grayscale(0%); }
+
 .proj-content {
-  position: relative; z-index: 10; background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.5) 50%, transparent);
+  position: relative; z-index: 10; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
   padding: 130px 40px 40px; width: 100%;
 }
-.proj-genre { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 3px; color: var(--burgundy); text-transform: uppercase; margin-bottom: 16px; }
-.proj-title { font-size: 32px; font-weight: 400; color: #fff; margin-bottom: 4px; transition: color 0.3s; }
-.proj-title-en { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; color: rgba(255,255,255,0.58); margin-bottom: 18px; }
-.proj-note { font-size: 15px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.8); margin-bottom: 24px; max-width: 600px; }
-.proj-badges { display: flex; flex-wrap: wrap; gap: 12px; }
+.proj-genre { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+
+.proj-title { font-size: 32px; font-weight: 400; color: #fff; margin-bottom: 4px; transition: opacity 0.6s, transform 0.6s; opacity: 0.7; transform: translateY(10px); }
+.proj-title-en { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; color: rgba(255,255,255,0.7); margin-bottom: 18px; transition: opacity 0.6s 0.05s, transform 0.6s 0.05s; opacity: 0; transform: translateY(15px); }
+.proj-note { font-size: 15px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 24px; max-width: 600px; transition: opacity 0.6s 0.1s, transform 0.6s 0.1s; opacity: 0; transform: translateY(15px); }
+.proj-badges { display: flex; flex-wrap: wrap; gap: 12px; transition: opacity 0.6s 0.15s, transform 0.6s 0.15s; opacity: 0; transform: translateY(15px); }
+
+.proj-item:hover .proj-title,
+.proj-item:hover .proj-title-en,
+.proj-item:hover .proj-note,
+.proj-item:hover .proj-badges { opacity: 1; transform: translateY(0); }
+
 .proj-badge {
   font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-  color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px;
+  color: #fff; border: 1px solid rgba(255,255,255,0.4); padding: 6px 16px; border-radius: 20px;
 }
 
 /* Guard Card Special Effect */
@@ -407,32 +484,63 @@ footer {
       else nav.classList.remove('scrolled');
     });
 
-    const hScrollSec = document.querySelector('.h-scroll-sec');
     const projList = document.querySelector('.proj-list');
-    window.addEventListener('scroll', () => {
-      if(!hScrollSec || !projList) return;
-      const rect = hScrollSec.getBoundingClientRect();
-      const scrollProgress = -rect.top;
-      const maxScroll = rect.height - window.innerHeight;
-      if (scrollProgress >= 0 && scrollProgress <= maxScroll) {
-        const ratio = scrollProgress / maxScroll;
-        const maxTranslate = Math.max(0, projList.scrollWidth - window.innerWidth + 128);
-        projList.style.transform = `translateY(-50%) translateX(-${ratio * maxTranslate}px)`;
-      } else if (scrollProgress > maxScroll) {
-        const maxTranslate = Math.max(0, projList.scrollWidth - window.innerWidth + 128);
-        projList.style.transform = `translateY(-50%) translateX(-${maxTranslate}px)`;
-      } else {
-        projList.style.transform = `translateY(-50%) translateX(0px)`;
+    if (projList) {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      projList.addEventListener('mousedown', (e) => {
+        isDown = true;
+        projList.classList.add('dragging');
+        startX = e.pageX - projList.offsetLeft;
+        scrollLeft = projList.scrollLeft;
+      });
+      projList.addEventListener('mouseleave', () => {
+        isDown = false;
+        projList.classList.remove('dragging');
+      });
+      projList.addEventListener('mouseup', () => {
+        isDown = false;
+        projList.classList.remove('dragging');
+      });
+      projList.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - projList.offsetLeft;
+        const walk = (x - startX) * 2;
+        projList.scrollLeft = scrollLeft - walk;
+      });
+      
+      const prevBtn = document.querySelector('.proj-nav.prev');
+      const nextBtn = document.querySelector('.proj-nav.next');
+      if(prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+          projList.scrollBy({ left: -490, behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', () => {
+          projList.scrollBy({ left: 490, behavior: 'smooth' });
+        });
       }
-    });
+    }
 
     const projItems = document.querySelectorAll('.proj-item');
     projItems.forEach(item => {
-      const video = item.querySelector('.proj-video');
-      if(video) {
-        item.addEventListener('mouseenter', () => video.play());
-        item.addEventListener('mouseleave', () => video.pause());
+      const media = item.querySelector('.proj-media');
+      if (media && media.tagName.toLowerCase() === 'video') {
+        item.addEventListener('mouseenter', () => {
+          if (media.paused) media.play().catch(()=>{});
+        });
+        item.addEventListener('mouseleave', () => {
+          media.pause();
+        });
       }
+      
+      item.addEventListener('click', (e) => {
+        const title = item.querySelector('.proj-title');
+        const projName = title ? title.innerText : '';
+        alert(`[Project Detail 모달 창 이동]\n선택한 프로젝트: ${projName}`);
+      });
     });
   });
 </script>
@@ -503,37 +611,47 @@ footer {
     성공적인 영상화를 위한 전문적인 기획 솔루션을 제공합니다.
   </p>
   <div class="services">
-    <div class="svc"><div class="svc-n">01 —</div><div class="svc-title">IP Sourcing<br>& Curation</div><p class="svc-desc">가능성 있는 원천 IP를 발굴합니다. 웹툰·웹소설 중심.</p></div>
-    <div class="svc"><div class="svc-n">02 —</div><div class="svc-title">Professional<br>Planning</div><p class="svc-desc">전문 프로듀서가 기획합니다. 대본 공동 기획 및 고도화.</p></div>
-    <div class="svc"><div class="svc-n">03 —</div><div class="svc-title">OSMU<br>Strategy</div><p class="svc-desc">하나의 이야기를 드라마·영화·공연으로 확장합니다.</p></div>
-    <div class="svc"><div class="svc-n">04 —</div><div class="svc-title">Production<br>Networking</div><p class="svc-desc">플랫폼·제작사 파트너십으로 편성과 유통을 잇습니다.</p></div>
+    <div class="svc"><div class="svc-n">01</div><div class="svc-title">IP Sourcing<br>& Curation</div><p class="svc-desc">가능성 있는 원천 IP를 발굴합니다. 웹툰·웹소설 중심.</p></div>
+    <div class="svc"><div class="svc-n">02</div><div class="svc-title">Professional<br>Planning</div><p class="svc-desc">전문 프로듀서가 기획합니다. 대본 공동 기획 및 고도화.</p></div>
+    <div class="svc"><div class="svc-n">03</div><div class="svc-title">OSMU<br>Strategy</div><p class="svc-desc">하나의 이야기를 드라마·영화·공연으로 확장합니다.</p></div>
+    <div class="svc"><div class="svc-n">04</div><div class="svc-title">Production<br>Networking</div><p class="svc-desc">플랫폼·제작사 파트너십으로 편성과 유통을 잇습니다.</p></div>
   </div>
 </div>
 
-<div class="sec-black h-scroll-sec" id="projects">
-  <div class="h-scroll-sticky">
-    <div class="sec-header">
-      <div class="sec-num">02</div>
-      <div class="sec-title">Projects</div>
-    </div>
-    <div class="h-scroll-wrap">
-      <div class="proj-list">
-        <div class="proj-item">
-          <video class="proj-video" loop muted playsinline><source src="https://videos.pexels.com/video-files/4006114/4006114-uhd_2732_1440_25fps.mp4" type="video/mp4"></video>
-          <div class="proj-content"><div class="proj-genre">Film · Development</div><div class="proj-title">영감</div><div class="proj-title-en">Inspiration</div><p class="proj-note">웹툰 원작. 위즈덤하우스 판권. 로케트필름 공동제작 확정.</p><div class="proj-badges"><span class="proj-badge">공동제작 확정</span><span class="proj-badge">27년 개봉 목표</span></div></div>
-        </div>
-        <div class="proj-item guard-card">
-          <video class="proj-video" loop muted playsinline><source src="https://videos.pexels.com/video-files/3163534/3163534-uhd_2560_1440_30fps.mp4" type="video/mp4"></video>
-          <div class="proj-content"><div class="proj-genre">Short-form Drama</div><div class="proj-title">최애의 경호 외 6건</div><div class="proj-title-en">Short Series</div><p class="proj-note">㈜키노필름 협업.</p><div class="proj-badges"><span class="proj-badge">제작 협업 진행</span></div></div>
-        </div>
-        <div class="proj-item">
-          <video class="proj-video" loop muted playsinline><source src="https://videos.pexels.com/video-files/8051284/8051284-hd_1920_1080_25fps.mp4" type="video/mp4"></video>
-          <div class="proj-content"><div class="proj-genre">Web Novel</div><div class="proj-title">이른 밤, 무희에게 총애를</div><div class="proj-title-en">Web Novel IP</div><p class="proj-note">KT블라이스 유료 연재. 판타지 로맨스 장르 월간 1위(1·2월). 25년 8월 완결.</p><div class="proj-badges"></div></div>
-        </div>
-        <div class="proj-item">
-          <video class="proj-video" loop muted playsinline><source src="https://videos.pexels.com/video-files/5820464/5820464-uhd_2560_1440_24fps.mp4" type="video/mp4"></video>
-          <div class="proj-content"><div class="proj-genre">Drama · 6-Part</div><div class="proj-title">영화 〈자리〉</div><div class="proj-title-en">The Place · Series</div><p class="proj-note">대본 기획. 콘진원 우수기획안 선정. 26년 하반기 편성 목표.</p><div class="proj-badges"></div></div>
-        </div>
+<div class="sec-burgundy projects-container" id="projects">
+  <div class="sec-header">
+    <div class="sec-num">02</div>
+    <div class="sec-title">Projects</div>
+  </div>
+  <div class="proj-slider-wrap">
+    <div class="proj-nav prev">←</div>
+    <div class="proj-nav next">→</div>
+    <div class="proj-list" id="projSlider">
+      <!-- Item 1: Flexible Video (mp4 with poster) -->
+      <div class="proj-item">
+        <video class="proj-media" loop muted playsinline poster="https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=800">
+          <source src="https://videos.pexels.com/video-files/4006114/4006114-uhd_2732_1440_25fps.mp4" type="video/mp4">
+        </video>
+        <div class="proj-content"><div class="proj-genre">Film · Development</div><div class="proj-title">영감</div><div class="proj-title-en">Inspiration</div><p class="proj-note">웹툰 원작. 위즈덤하우스 판권. 로케트필름 공동제작 확정.</p><div class="proj-badges"><span class="proj-badge">공동제작 확정</span><span class="proj-badge">27년 개봉 목표</span></div></div>
+      </div>
+      <!-- Item 2: Flexible Video (mp4 with poster) -->
+      <div class="proj-item guard-card">
+        <video class="proj-media" loop muted playsinline poster="https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=800">
+          <source src="https://videos.pexels.com/video-files/3163534/3163534-uhd_2560_1440_30fps.mp4" type="video/mp4">
+        </video>
+        <div class="proj-content"><div class="proj-genre">Short-form Drama</div><div class="proj-title">최애의 경호 외 6건</div><div class="proj-title-en">Short Series</div><p class="proj-note">㈜키노필름 협업.</p><div class="proj-badges"><span class="proj-badge">제작 협업 진행</span></div></div>
+      </div>
+      <!-- Item 3: Flexible Video (mp4 with poster) -->
+      <div class="proj-item">
+        <video class="proj-media" loop muted playsinline poster="https://images.pexels.com/photos/10312631/pexels-photo-10312631.jpeg?auto=compress&cs=tinysrgb&w=800">
+          <source src="https://videos.pexels.com/video-files/8051284/8051284-hd_1920_1080_25fps.mp4" type="video/mp4">
+        </video>
+        <div class="proj-content"><div class="proj-genre">Web Novel</div><div class="proj-title">이른 밤, 무희에게 총애를</div><div class="proj-title-en">Web Novel IP</div><p class="proj-note">KT블라이스 유료 연재. 판타지 로맨스 장르 월간 1위(1·2월). 25년 8월 완결.</p><div class="proj-badges"></div></div>
+      </div>
+      <!-- Item 4: Flexible Media Demonstration (fallback to image/gif is fully supported by using IMG) -->
+      <div class="proj-item">
+        <img class="proj-media" src="https://images.pexels.com/photos/3380805/pexels-photo-3380805.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Animated Poster Example">
+        <div class="proj-content"><div class="proj-genre">Drama · 6-Part</div><div class="proj-title">영화 〈자리〉</div><div class="proj-title-en">The Place · Series</div><p class="proj-note">대본 기획. 콘진원 우수기획안 선정. 26년 하반기 편성 목표.</p><div class="proj-badges"></div></div>
       </div>
     </div>
   </div>
