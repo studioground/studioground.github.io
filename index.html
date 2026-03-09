@@ -26,8 +26,9 @@ html { scroll-behavior:smooth; background: #050505; }
 }
 .cursor-dot { width: 6px; height: 6px; background: var(--gold); }
 .cursor-outline {
-  width: 40px; height: 40px;
-  border: 1px solid rgba(196, 162, 101, 0.4);
+  width: 42px;
+  height: 42px;
+  border: 2px solid rgba(196,162,101,0.9);
   transition: width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s;
 }
 
@@ -96,7 +97,18 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
   font-family: 'Playfair Display', serif; font-size: clamp(60px, 9vw, 132px); font-weight: 400; line-height: 0.98;
   letter-spacing: -3px; color: #fff; margin-bottom: 56px; text-shadow: 0 14px 34px rgba(0,0,0,0.5);
 }
-.hero-h1 em { font-style: italic; font-weight: 600; color: #fff; }
+.hero-h1 em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--burgundy); /* 버건디 컬러로 변경 */
+  animation: wineGlow 4s ease-in-out infinite;
+}
+
+@keyframes wineGlow {
+  0% { text-shadow: 0 0 4px rgba(140,28,42,0.2); }
+  50% { text-shadow: 0 0 40px rgba(140,28,42,0.95), 0 0 20px rgba(140,28,42,0.8); }
+  100% { text-shadow: 0 0 4px rgba(140,28,42,0.2); }
+}
 .hero-bottom {
   display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 40px; gap: 40px;
 }
@@ -119,6 +131,13 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
   transition: opacity 0.8s, transform 3s ease-out;
 }
 .sec-video:hover .sample-video { opacity: 0.7; transform: translate(-50%, -50%) scale(1.03); }
+
+/* Showreel Playing State */
+.sec-video.is-playing .sample-video { opacity: 1; transform: translate(-50%, -50%) scale(1.0); }
+.sec-video.is-playing .video-text { opacity: 0; transition: opacity 0.4s; }
+.sec-video.is-playing .play-btn { opacity: 0; transition: opacity 0.4s; }
+.sec-video.is-playing:hover .play-btn { opacity: 1; border-color: transparent; }
+
 .video-overlay {
   position: relative; z-index: 10; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px;
 }
@@ -145,35 +164,58 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 .sec-dark { background: var(--bg); position: relative; }
 .sec-black { background: #000; position: relative; border-top: 1px solid var(--line); }
 
+/* 새롭게 추가된 Editorial White 섹션 */
+.sec-white { background: #ffffff; position: relative; color: #111; }
+
 .sec-header { padding: 100px 64px 60px; border-bottom: 1px solid var(--line-soft); }
+.sec-white .sec-header { border-bottom: 1px solid rgba(0,0,0,0.1); }
+
 .sec-num {
   font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--gold); letter-spacing: 3px; margin-bottom: 16px;
 }
+.sec-white .sec-num { color: var(--burgundy); }
+
 .sec-title {
   font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 400; color: #fff; letter-spacing: -1.5px; line-height: 1.1;
 }
+.sec-white .sec-title { color: #111; }
+
 .sec-lead {
   padding: 60px 64px 0; font-size: 26px; font-weight: 300; line-height: 1.6; color: #fff; max-width: 720px; margin-bottom: 0;
 }
+.sec-white .sec-lead { color: #111; }
 
 /* Services */
 .services { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-soft); margin-top: 60px; }
+.sec-white .services { border-top: 1px solid rgba(0,0,0,0.1); }
+
 .svc {
   padding: 60px 48px; border-right: 1px solid var(--line-soft); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative; overflow: hidden; cursor: default;
 }
+.sec-white .svc { border-right: 1px solid rgba(0,0,0,0.1); }
 .svc::after {
   content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(140, 28, 42, 0.1)); opacity: 0; transition: opacity 0.4s; z-index: 0;
 }
+
+.sec-white .svc::after { background: linear-gradient(to bottom, transparent, rgba(140, 28, 42, 0.05)); }
+
 .svc:last-child { border-right: none; }
 .svc:hover { background: #0b0b0b; }
+.sec-white .svc:hover { background: rgba(0,0,0,0.02); }
 .svc:hover::after { opacity: 1; }
 .svc * { position: relative; z-index: 1; }
+
 .svc-n { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--burgundy); letter-spacing: 2px; margin-bottom: 32px; transition: transform 0.4s ease; }
 .svc-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: #fff; line-height: 1.3; margin-bottom: 24px; transition: color 0.3s, transform 0.4s ease; }
+.sec-white .svc-title { color: #111; font-weight: 600; }
+
 .svc-desc { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--ink-soft); transition: transform 0.4s ease; }
+.sec-white .svc-desc { color: #333; }
+
 .svc:hover .svc-n, .svc:hover .svc-title, .svc:hover .svc-desc { transform: translateY(-6px); }
 .svc:hover .svc-title { color: var(--gold); }
+.sec-white .svc:hover .svc-title { color: var(--burgundy); }
 
 /* Horizontal Scroll */
 .h-scroll-sec { height: 300vh; position: relative; border-bottom: 1px solid var(--line); }
@@ -417,17 +459,41 @@ footer {
   </div>
 </div>
 
-<div class="sec-video fade-up" id="showreel">
-  <video class="sample-video" autoplay loop muted playsinline>
+<div class="sec-video fade-up" id="showreel" style="cursor: pointer;">
+  <video class="sample-video" id="showreel-video" loop playsinline poster="https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=1920">
     <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4" type="video/mp4">
   </video>
   <div class="video-overlay">
-    <div class="play-btn"><div class="play-icon">▶</div></div>
-    <div class="video-text">Sample Video Placeholder</div>
+    <div class="play-btn"><div class="play-icon" id="showreel-icon">▶</div></div>
+    <div class="video-text" id="showreel-text">Play Showreel</div>
   </div>
 </div>
 
-<div class="sec-dark" id="about">
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const showreelSec = document.getElementById('showreel');
+    const showreelVideo = document.getElementById('showreel-video');
+    const showreelIcon = document.getElementById('showreel-icon');
+    
+    if (showreelSec && showreelVideo) {
+      showreelSec.addEventListener('click', () => {
+        if (showreelVideo.paused) {
+          showreelVideo.play();
+          showreelSec.classList.add('is-playing');
+          showreelIcon.innerHTML = '❚❚';
+          showreelIcon.style.fontSize = '12px';
+        } else {
+          showreelVideo.pause();
+          showreelSec.classList.remove('is-playing');
+          showreelIcon.innerHTML = '▶';
+          showreelIcon.style.fontSize = '20px';
+        }
+      });
+    }
+  });
+</script>
+
+<div class="sec-white" id="about">
   <div class="sec-header">
     <div class="sec-num">01</div>
     <div class="sec-title">What We Do</div>
@@ -492,7 +558,7 @@ footer {
     <div class="news-row">
       <div class="news-date">2026. 01. 10</div>
       <div class="news-cat">Press</div>
-      <div class="news-title">'이른 밤, 무희에게 총애를' 월간 1위 달성 및 해외 진출 논의</div>
+      <div class="news-title">'이른 밤, 무희에게 총애를' 월간 1위 달성 및 해외 진출 진출 논의</div>
     </div>
   </div>
 </div>
