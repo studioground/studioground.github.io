@@ -4,858 +4,316 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Studio Ground Inc. — Stories on Ground</title>
-<!-- GOOGLE FONTS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
-<!-- SUIT OR PRETENDARD (Korean Minimal Font) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; background: #050505; }
 @media (hover: hover) and (pointer: fine) {
   body { cursor: none; }
-  a, button, .svc, .proj-item, .video-overlay, .contact-link { cursor: none !important; }
+  a, button, .svc, .proj-item, .video-overlay, .contact-link, .news-row { cursor: none !important; }
 }
 
 /* ══════════════════════════
-   CUSTOM CURSOR & VIDEO CSS
+   CUSTOM CURSOR
 ══════════════════════════ */
 .cursor-dot, .cursor-outline {
-  position: fixed;
-  top: 0; left: 0;
+  position: fixed; top: 0; left: 0;
   transform: translate(-50%, -50%);
-  border-radius: 50%;
-  z-index: 9999;
-  pointer-events: none;
+  border-radius: 50%; z-index: 9999; pointer-events: none;
 }
-.cursor-dot {
-  width: 6px; height: 6px;
-  background: var(--gold);
-}
+.cursor-dot { width: 6px; height: 6px; background: var(--gold); }
 .cursor-outline {
   width: 40px; height: 40px;
-  border: 1px solid rgba(196, 162, 101, 0.5);
+  border: 1px solid rgba(196, 162, 101, 0.4);
   transition: width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s;
-.sec-video {
-  position: relative;
-  width: 100%;
-  height: 80vh;
-  min-height: 500px;
-  overflow: hidden;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.sample-video {
-  position: absolute;
-  top: 50%; left: 50%;
-  min-width: 100%; min-height: 100%;
-  width: auto; height: auto;
-  transform: translate(-50%, -50%) scale(1.0);
-  object-fit: cover;
-  opacity: 0.4;
-  transition: opacity 0.8s, transform 3s ease-out;
-}
-.sec-video:hover .sample-video {
-  opacity: 0.7;
-  transform: translate(-50%, -50%) scale(1.03);
-}
-.video-overlay {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-.play-btn {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  border: 1px dashed rgba(255,255,255,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(4px);
-  position: relative;
-}
-.play-btn::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 50%;
-  background: rgba(140, 28, 42, 0.8);
-  opacity: 0;
-  transition: opacity 0.5s;
-  z-index: -1;
-}
-.play-btn .play-icon {
-  color: #fff;
-  font-size: 20px;
-  margin-left: 4px;
-  transition: transform 0.4s;
-}
-.video-overlay:hover .play-btn {
-  transform: scale(1.1) rotate(90deg);
-  border: 1px solid transparent;
-}
-.video-overlay:hover .play-btn::before {
-  opacity: 1;
-}
-.video-overlay:hover .play-btn .play-icon {
-  transform: rotate(-90deg) scale(1.2);
-}
-.video-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: #fff;
 }
 
 /* ══════════════════════════
-   CINEMATIC DARK THEME
+   COLOR SYSTEM
 ══════════════════════════ */
 :root {
-  --bg:     #050505;
+  --bg: #050505;
   --bg-alpha: rgba(5,5,5,0.85);
-  --ink:    #f2f2f2;
-  --ink2:   #b0b0b0;
-  --gray:   #7a7a7a;
-  --muted:  #5e5e5e;
-  --line:   #222222;
-  --dark-navy: #ffffff; 
-  --dark-forest: #8C1C2A;
-  --dark-espresso: #ffffff;
-  --dark-slate: #f9f9f9;
-  --wine:   #8C1C2A; /* Deep Cinematic Red */
-  --wine2:  #6A141F;
-  --gold:   #C4A265; /* Accent color for premium feel */
-  --text-dark: #111111;
+  --ink: #f2f2f2;
+  --ink-soft: #b0b0b0;
+  --line: rgba(255,255,255,0.05);
+  --line-soft: rgba(255,255,255,0.05);
+  --burgundy: #8C1C2A;
+  --gold: #C4A265;
 }
 
 body {
-  background: var(--bg);
-  color: var(--text-dark);
-  font-family: 'SUIT', 'Inter', sans-serif;
-  font-weight: 300;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-/* Prevent body scroll during preloader */
-body.no-scroll { overflow: hidden; }
-
-/* ══════════════════════════
-   PRELOADER (RENDERING PAGE)
-══════════════════════════ */
-#preloader {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: #000;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 1.2s cubic-bezier(0.8, 0, 0.2, 1), transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
-}
-.preloader.fade-out {
-  opacity: 0;
-  transform: scale(1.05);
-  pointer-events: none;
-}
-.preloader-content {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-.preloader-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 8px;
-  color: #fff;
-  text-transform: uppercase;
-  animation: pulse 2s infinite ease-in-out;
-}
-.preloader-bar-wrap {
-  width: 140px;
-  height: 2px;
-  background: rgba(255,255,255,0.1);
-  overflow: hidden;
-  position: relative;
-}
-.preloader-bar-fill {
-  position: absolute;
-  top: 0; left: 0; height: 100%;
-  background: var(--gold);
-  width: 0%;
-  animation: loadFill 2.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-
-@keyframes loadFill {
-  0% { width: 0%; }
-  40% { width: 30%; }
-  70% { width: 80%; }
-  100% { width: 100%; }
-}
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  background: var(--bg); color: var(--ink); font-family: 'SUIT', 'Inter', sans-serif; font-weight: 300;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
 }
 
 /* ══════════════════════════
-   NAV — GLASSMORPHISM
+   NAVIGATION
 ══════════════════════════ */
 nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 999;
-  background: var(--bg-alpha);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  height: 64px;
-  display: flex;
-  align-items: center;
-  padding: 0 48px;
-  justify-content: space-between;
-  transition: transform 0.4s ease, background 0.4s;
+  position: fixed; top: 0; width: 100%; z-index: 999; background: var(--bg-alpha);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line); height: 64px; display: flex; align-items: center;
+  padding: 0 48px; justify-content: space-between; transition: transform 0.4s ease, background 0.4s;
 }
-nav.scrolled {
-  background: rgba(0,0,0,0.95);
-  border-bottom: 1px solid var(--line);
-}
-
+nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line); }
 .nav-logo-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 4px;
-  color: var(--ink);
-  text-transform: uppercase;
-  text-decoration: none;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 4px; color: var(--ink);
+  text-transform: uppercase; text-decoration: none;
 }
-
-.nav-links {
-  display: flex;
-  gap: 32px;
-}
+.nav-links { display: flex; gap: 32px; }
 .nav-links a {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--ink2);
-  text-decoration: none;
-  position: relative;
-  transition: color 0.3s;
+  font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ink-soft); text-decoration: none; position: relative; transition: color 0.3s;
 }
 .nav-links a:hover { color: #fff; }
 .nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0%;
-  height: 1px;
-  background: var(--wine);
-  transition: width 0.3s ease;
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0%; height: 1px; background: var(--burgundy); transition: width 0.3s ease;
 }
 .nav-links a:hover::after { width: 100%; }
 
 /* ══════════════════════════
-   HERO — CINEMATIC VIDEO BG
+   HERO
 ══════════════════════════ */
 .hero {
-  position: relative;
-  height: 100vh;
-  min-height: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 64px 80px;
-  background: #000;
-  overflow: hidden;
+  position: relative; height: 100vh; min-height: 820px; display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 64px 80px; background: #000; overflow: hidden;
 }
-
-/* Background Video */
-.hero-video-bg {
-  position: absolute;
-  top: 50%; left: 50%;
-  min-width: 100%; min-height: 100%;
-  width: auto; height: auto;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  opacity: 0.5;
-  z-index: 0;
+.hero-video {
+  position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto;
+  object-fit: cover; transform: translate(-50%, -50%) scale(1.02); opacity: 0.5; filter: grayscale(100%);
 }
-.hero::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(140, 28, 42, 0.4) 100%);
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 0%, #000 100%);
   z-index: 1;
 }
-
-.hero > * {
-  position: relative;
-  z-index: 10;
-}
-
+.hero > * { position: relative; z-index: 10; }
 .hero-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(60px, 9vw, 130px);
-  font-weight: 400;
-  line-height: 1.0;
-  letter-spacing: -3px;
-  color: #ffffff;
-  margin-bottom: 56px;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  font-family: 'Playfair Display', serif; font-size: clamp(60px, 9vw, 132px); font-weight: 400; line-height: 0.98;
+  letter-spacing: -3px; color: #fff; margin-bottom: 56px; text-shadow: 0 14px 34px rgba(0,0,0,0.5);
 }
-.hero-h1 em {
-  font-style: italic;
-  font-weight: 600;
-  color: var(--wine);
-}
-
+.hero-h1 em { font-style: italic; font-weight: 600; color: #fff; }
 .hero-bottom {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 40px;
-  gap: 40px;
+  display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 40px; gap: 40px;
 }
-
-.hero-desc {
-  font-family: 'SUIT', sans-serif;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: var(--ink2);
-  max-width: 420px;
-}
-
+.hero-desc { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--ink-soft); max-width: 440px; }
 .hero-tagline {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-align: right;
-  white-space: nowrap;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #fff; text-align: right; white-space: nowrap;
 }
 
 /* ══════════════════════════
-   REUSABLE SECTION STYLES
+   VIDEOS (Showreel)
 ══════════════════════════ */
-.sec-navy { background: #ffffff; color: var(--text-dark); position: relative; z-index: 2; }
-.sec-forest { background: var(--wine); color: #ffffff; position: relative; }
-.sec-espresso { background: #ffffff; color: var(--text-dark); position: relative; }
-.sec-slate { background: #f9f9f9; color: var(--text-dark); position: relative; }
-
-.sec-header {
-  padding: 100px 64px 60px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+.sec-video {
+  position: relative; width: 100%; height: 82vh; min-height: 520px; overflow: hidden;
+  background: #000; display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid var(--line);
 }
+.sample-video {
+  position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto;
+  transform: translate(-50%, -50%) scale(1.0); object-fit: cover; opacity: 0.4;
+  transition: opacity 0.8s, transform 3s ease-out;
+}
+.sec-video:hover .sample-video { opacity: 0.7; transform: translate(-50%, -50%) scale(1.03); }
+.video-overlay {
+  position: relative; z-index: 10; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px;
+}
+.play-btn {
+  width: 92px; height: 92px; border-radius: 50%; border: 1px dashed rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); backdrop-filter: blur(4px); position: relative;
+}
+.play-btn::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%; background: rgba(140, 28, 42, 0.8);
+  opacity: 0; transition: opacity 0.5s; z-index: -1;
+}
+.play-btn .play-icon { color: #fff; font-size: 20px; margin-left: 4px; transition: transform 0.4s; }
+.video-overlay:hover .play-btn { transform: scale(1.1) rotate(90deg); border-color: transparent; }
+.video-overlay:hover .play-btn::before { opacity: 1; }
+.video-overlay:hover .play-btn .play-icon { transform: rotate(-90deg) scale(1.2); }
+.video-text {
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: #fff;
+}
+
+/* ══════════════════════════
+   GLOBAL SECTIONS
+══════════════════════════ */
+.sec-dark { background: var(--bg); position: relative; }
+.sec-black { background: #000; position: relative; border-top: 1px solid var(--line); }
+
+.sec-header { padding: 100px 64px 60px; border-bottom: 1px solid var(--line-soft); }
 .sec-num {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--gold);
-  letter-spacing: 3px;
-  margin-bottom: 16px;
+  font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--gold); letter-spacing: 3px; margin-bottom: 16px;
 }
 .sec-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 64px;
-  font-weight: 400;
-  letter-spacing: -1.5px;
-  line-height: 1.1;
+  font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 400; color: #fff; letter-spacing: -1.5px; line-height: 1.1;
 }
 .sec-lead {
-  padding: 60px 64px 0;
-  font-size: 26px;
-  font-weight: 300;
-  line-height: 1.6;
-  max-width: 720px;
-  margin-bottom: 0;
+  padding: 60px 64px 0; font-size: 26px; font-weight: 300; line-height: 1.6; color: #fff; max-width: 720px; margin-bottom: 0;
 }
 
-/* services 4-col */
-.services {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid rgba(255,255,255,0.05);
-  margin-top: 60px;
-}
+/* Services */
+.services { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-soft); margin-top: 60px; }
 .svc {
-  padding: 60px 48px;
-  border-right: 1px solid rgba(255,255,255,0.05);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-  cursor: default;
+  padding: 60px 48px; border-right: 1px solid var(--line-soft); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative; overflow: hidden; cursor: default;
 }
 .svc::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to bottom, transparent, rgba(140, 28, 42, 0.1));
-  opacity: 0;
-  transition: opacity 0.4s;
-  z-index: 0;
+  content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(140, 28, 42, 0.1)); opacity: 0; transition: opacity 0.4s; z-index: 0;
 }
 .svc:last-child { border-right: none; }
-.svc:hover { 
-  background: #0b0b0b; 
-}
+.svc:hover { background: #0b0b0b; }
 .svc:hover::after { opacity: 1; }
-
 .svc * { position: relative; z-index: 1; }
+.svc-n { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--burgundy); letter-spacing: 2px; margin-bottom: 32px; transition: transform 0.4s ease; }
+.svc-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: #fff; line-height: 1.3; margin-bottom: 24px; transition: color 0.3s, transform 0.4s ease; }
+.svc-desc { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--ink-soft); transition: transform 0.4s ease; }
+.svc:hover .svc-n, .svc:hover .svc-title, .svc:hover .svc-desc { transform: translateY(-6px); }
+.svc:hover .svc-title { color: var(--gold); }
 
-.svc-n {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--wine);
-  letter-spacing: 2px;
-  margin-bottom: 32px;
-  transition: transform 0.4s ease;
-}
-.svc-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 400;
-  line-height: 1.3;
-  margin-bottom: 24px;
-  transition: color 0.3s, transform 0.4s ease;
-}
-.svc-desc {
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: #333;
-  transition: transform 0.4s ease;
-}
-.svc:hover .svc-n, .svc:hover .svc-title, .svc:hover .svc-desc {
-  transform: translateY(-6px);
-}
-.svc:hover .svc-title {
-  color: var(--gold);
-}
-
-/* ══════════════════════════
-   HORIZONTAL SCROLL & PROJECTS
-══════════════════════════ */
-.h-scroll-sec {
-  height: 300vh;
-  position: relative;
-}
-.h-scroll-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.h-scroll-wrap {
-  flex: 1;
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
+/* Horizontal Scroll */
+.h-scroll-sec { height: 300vh; position: relative; border-bottom: 1px solid var(--line); }
+.h-scroll-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+.h-scroll-wrap { flex: 1; width: 100%; position: relative; display: flex; align-items: center; }
 .proj-list {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 64px;
-  transform: translateY(-50%) translateX(0);
-  gap: 40px;
-  padding-right: 128px;
-  will-change: transform;
+  display: flex; position: absolute; top: 50%; left: 64px; transform: translateY(-50%) translateX(0);
+  gap: 40px; padding-right: 128px; will-change: transform;
 }
 .proj-item {
-  flex: 0 0 450px;
-  height: 70vh;
-  min-height: 400px;
-  max-height: 600px;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  border: 1px solid rgba(255,255,255,0.05);
-  transition: transform 0.4s ease, border-color 0.4s, box-shadow 0.4s;
+  flex: 0 0 450px; height: 70vh; min-height: 400px; max-height: 600px; background: #000; border-radius: 12px;
+  overflow: hidden; position: relative; cursor: pointer; display: flex; flex-direction: column; justify-content: flex-end;
+  border: 1px solid rgba(255,255,255,0.05); transition: transform 0.4s ease, border-color 0.4s, box-shadow 0.4s;
 }
-.proj-item:hover {
-  transform: translateY(-10px);
-  border-color: #fff;
-  box-shadow: 0 20px 40px rgba(140, 28, 42, 0.4);
-}
+.proj-item:hover { transform: translateY(-10px); border-color: #fff; box-shadow: 0 20px 40px rgba(140, 28, 42, 0.4); }
 .proj-video {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  object-fit: cover;
-  opacity: 0.2;
-  transition: opacity 0.5s, transform 5s ease-out;
-  z-index: 0;
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2;
+  transition: opacity 0.5s, transform 5s ease-out; z-index: 0; filter: grayscale(50%);
 }
-.proj-item:hover .proj-video {
-  opacity: 1;
-  transform: scale(1.05);
-}
+.proj-item:hover .proj-video { opacity: 0.7; transform: scale(1.05); filter: grayscale(0%); }
 .proj-content {
-  position: relative;
-  z-index: 10;
-  background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.5) 50%, transparent);
-  padding: 120px 40px 40px;
-  width: 100%;
+  position: relative; z-index: 10; background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.5) 50%, transparent);
+  padding: 130px 40px 40px; width: 100%;
 }
-
-.proj-genre {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  color: var(--wine);
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.proj-title {
-  font-size: 32px;
-  font-weight: 400;
-  color: #fff;
-  margin-bottom: 4px;
-  transition: color 0.3s;
-}
-.proj-title-en {
-  font-family: 'Playfair Display', serif;
-  font-size: 16px;
-  font-style: italic;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 18px;
-}
-.proj-note {
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: rgba(255,255,255,0.9);
-  margin-bottom: 24px;
-  max-width: 600px;
-}
-.proj-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
+.proj-genre { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 3px; color: var(--burgundy); text-transform: uppercase; margin-bottom: 16px; }
+.proj-title { font-size: 32px; font-weight: 400; color: #fff; margin-bottom: 4px; transition: color 0.3s; }
+.proj-title-en { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; color: rgba(255,255,255,0.58); margin-bottom: 18px; }
+.proj-note { font-size: 15px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.8); margin-bottom: 24px; max-width: 600px; }
+.proj-badges { display: flex; flex-wrap: wrap; gap: 12px; }
 .proj-badge {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 6px 16px;
-  border-radius: 20px;
+  font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px;
 }
 
-/* ══════════════════════════
-   TEAM
-══════════════════════════ */
-
-.team-list {
-  padding: 0 64px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+/* Guard Card Special Effect */
+.proj-item.guard-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0) 28%), repeating-linear-gradient(180deg, rgba(255,255,255,0.02) 0 2px, rgba(255,255,255,0) 2px 6px);
+  opacity: 0.34; mix-blend-mode: screen; z-index: 2; pointer-events: none;
 }
 
+/* News List */
+.news-list { padding: 0 64px 64px; border-bottom: 1px solid var(--line); }
+.news-row {
+  display: grid; grid-template-columns: 120px 100px 1fr; padding: 32px 0; border-bottom: 1px solid var(--line-soft); align-items: center; gap: 24px; cursor: pointer; transition: padding-left 0.3s, background 0.3s;
+}
+.news-row:last-child { border-bottom: none; }
+.news-row:hover { padding-left: 16px; background: rgba(255,255,255,0.02); }
+.news-date { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; color: var(--gold); letter-spacing: 1px; }
+.news-cat { font-size: 11px; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 1px; }
+.news-title { font-size: 18px; font-weight: 400; color: var(--ink); transition: color 0.3s; }
+.news-row:hover .news-title { color: var(--burgundy); }
+
+/* Team */
+.team-list { padding: 0 64px; border-bottom: 1px solid var(--line-soft); }
 .team-row {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  align-items: center;
-  min-height: 100px;
-  transition: background 0.4s;
-  cursor: default;
+  display: grid; grid-template-columns: 240px 1fr; border-bottom: 1px solid var(--line-soft); align-items: center;
+  min-height: 100px; transition: background 0.4s; cursor: default;
 }
 .team-row:last-child { border-bottom: none; }
 .team-row:hover { background: rgba(255,255,255,0.02); }
 .team-row:hover .team-name { color: var(--gold); }
-.team-name { transition: color 0.3s; }
-
-.team-info {
-  padding: 40px 0;
-  padding-right: 40px;
-  border-right: 1px solid rgba(255,255,255,0.05);
-}
-.team-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  font-weight: 400;
-  margin-bottom: 8px;
-}
-.team-role {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--wine);
-  text-transform: uppercase;
-}
-.team-credits {
-  padding: 30px 0 30px 60px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-}
+.team-info { padding: 40px 0; padding-right: 40px; border-right: 1px solid var(--line-soft); }
+.team-name { transition: color 0.3s; font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; color: #fff; margin-bottom: 8px; }
+.team-role { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2px; color: var(--burgundy); text-transform: uppercase; }
+.team-credits { padding: 30px 0 30px 60px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .credit {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--text-dark);
-  border: 1px solid var(--wine);
-  padding: 8px 16px;
-  border-radius: 20px;
-  white-space: nowrap;
+  font-size: 13px; font-weight: 300; color: var(--ink); border: 1px solid var(--burgundy); padding: 8px 16px; border-radius: 20px; white-space: nowrap; background: rgba(255,255,255,0.02);
 }
 
-/* ══════════════════════════
-   NEWS BOARD (게시판)
-══════════════════════════ */
-.news-list {
-  padding: 0 64px;
-}
-.news-row {
-  display: grid;
-  grid-template-columns: 120px 100px 1fr;
-  padding: 32px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  align-items: center;
-  gap: 24px;
-  cursor: pointer;
-  transition: padding-left 0.3s, background 0.3s;
-}
-.sec-navy .news-row { border-bottom-color: rgba(0,0,0,0.1); }
-.sec-navy .news-row:hover { padding-left: 16px; background: rgba(0,0,0,0.02); }
-.news-row:last-child { border-bottom: none; }
-
-.news-date {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--wine);
-  letter-spacing: 1px;
-}
-.news-cat {
-  font-size: 11px;
-  font-weight: 600;
-  color: #777;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.news-title {
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--text-dark);
-  transition: color 0.3s;
-}
-.news-row:hover .news-title { color: var(--wine); }
-
-/* ══════════════════════════
-   CONTACT
-══════════════════════════ */
+/* Contact */
 .contact-wrap {
-  padding: 100px 64px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 100px 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
+  border-bottom: 1px solid var(--line);
 }
-
-.rep-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 3px;
-  color: var(--wine);
-  text-transform: uppercase;
-  margin-bottom: 24px;
+.rep-label, .vision-label {
+  font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 3px; color: var(--gold); text-transform: uppercase;
 }
-.rep-name {
-  font-family: 'SUIT', sans-serif;
-  font-size: 60px;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -1px;
-  margin-bottom: 4px;
-  color: var(--text-dark);
-}
-.rep-en {
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--text-dark);
-  opacity: 0.6;
-  margin-bottom: 32px;
-}
+.rep-label { margin-bottom: 24px; }
+.vision-label { margin-bottom: 32px; }
+.rep-name { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 400; line-height: 1.0; letter-spacing: -2px; color: #fff; margin-bottom: 12px; }
+.rep-kr { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.72); margin-bottom: 8px; }
 .rep-pos {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  color: var(--wine);
-  text-transform: uppercase;
-  margin-bottom: 48px;
+  font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 3px; color: var(--burgundy); text-transform: uppercase; margin-bottom: 60px;
 }
-.contact-links { border-top: 1px solid rgba(255,255,255,0.05); }
+.contact-links { border-top: 1px solid var(--line); }
 .contact-link {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  padding: 24px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  text-decoration: none;
-  transition: opacity 0.3s, padding-left 0.3s;
+  display: flex; align-items: center; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--line);
+  text-decoration: none; transition: opacity 0.3s, padding-left 0.3s;
 }
-.contact-link:hover { 
-  opacity: 1; 
-  padding-left: 10px;
-}
+.contact-link:hover { opacity: 1; padding-left: 10px; }
 .contact-link:hover .cl-val { color: var(--gold); }
 .cl-type {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  color: var(--wine);
-  text-transform: uppercase;
-  width: 80px;
-  flex-shrink: 0;
+  font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.62);
+  text-transform: uppercase; width: 80px; flex-shrink: 0;
 }
-.cl-val {
-  font-size: 15px;
-  font-weight: 300;
-  transition: color 0.3s;
-}
-
-.vision-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 3px;
-  color: var(--wine);
-  text-transform: uppercase;
-  margin-bottom: 32px;
-}
+.cl-val { font-size: 15px; font-weight: 300; color: #fff; transition: color 0.3s; }
 .vision-q {
-  font-family: 'SUIT', sans-serif;
-  font-size: 24px;
-  font-weight: 300;
-  line-height: 1.6;
-  margin-bottom: 48px;
+  font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; font-style: italic; line-height: 1.8; color: #fff; margin-bottom: 60px;
 }
 .co-info {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 1.5px;
-  line-height: 2.6;
+  font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 1.5px; color: rgba(255,255,255,0.66); line-height: 2.6;
 }
 
-/* FOOTER */
+/* Footer */
 footer {
-  background: #000;
-  padding: 40px 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  background: #000; padding: 40px 64px; display: flex; justify-content: space-between; align-items: center;
 }
-.ft-copy {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 2px;
-}
-.ft-tag {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  font-style: italic;
-  color: var(--muted);
-}
+.ft-copy { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--ink-soft); letter-spacing: 2px; }
+.ft-tag { font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: #fff; }
 
-/* ══════════════════════════
-   SCROLL ANIMATIONS (Cinematic)
-══════════════════════════ */
 .fade-up {
-  opacity: 0;
-  transform: translateY(60px);
+  opacity: 0; transform: translateY(60px);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
 
-
-/* ══════════════════════════
-   MOBILE
-══════════════════════════ */
+/* Mobile */
 @media (max-width: 860px) {
-  nav, .hero,
-  .sec-header, .sec-lead,
-  .team-list, .contact-wrap,
-  footer { padding-left: 24px; padding-right: 24px; }
-
+  nav, .hero, .sec-header, .sec-lead, .news-list, .team-list, .contact-wrap, footer { padding-left: 24px; padding-right: 24px; }
   .proj-list { left: 24px; padding-right: 48px; }
   .proj-item { flex: 0 0 320px; height: 50vh; min-height: 350px; }
   .h-scroll-sec { height: 250vh; }
-  .proj-content { padding: 80px 32px 32px; }
-
+  .proj-content { padding: 84px 32px 32px; }
   .hero-h1 { font-size: clamp(46px, 11vw, 72px); }
   .hero-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
   .hero-tagline { text-align: left; }
   .services { grid-template-columns: 1fr 1fr; }
-  .svc { border-bottom: 1px solid #2a2a2a; }
+  .svc { border-bottom: 1px solid var(--line-soft); }
   .team-row { grid-template-columns: 1fr; }
-  .team-info { border-right: none; border-bottom: 1px solid var(--line); padding-right: 0; }
+  .team-info { border-right: none; border-bottom: 1px solid var(--line-soft); padding-right: 0; }
   .team-credits { padding-left: 0; }
-  .sec-white .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
   .nav-links a { padding: 0 14px; font-size: 9px; letter-spacing: 2px; }
+  .news-row { grid-template-columns: 100px 80px 1fr; gap: 16px; }
 }
 </style>
 </head>
-<body class="dark-theme no-scroll">
+<body class="dark-theme">
 
-<!-- ── PRELOADER ── -->
-<div id="preloader" class="preloader">
-  <div class="preloader-content">
-    <div class="preloader-title">Rendering Studio Ground</div>
-    <div class="preloader-bar-wrap">
-      <div class="preloader-bar-fill"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ── CUSTOM CURSOR ── -->
 <div class="cursor-dot" data-cursor-dot></div>
 <div class="cursor-outline" data-cursor-outline></div>
 
@@ -864,21 +322,14 @@ footer {
     if (window.matchMedia("(pointer: fine)").matches) {
       const cursorDot = document.querySelector('[data-cursor-dot]');
       const cursorOutline = document.querySelector('[data-cursor-outline]');
-      
       window.addEventListener('mousemove', (e) => {
         const posX = e.clientX;
         const posY = e.clientY;
-        
         cursorDot.style.left = `${posX}px`;
         cursorDot.style.top = `${posY}px`;
-        
-        cursorOutline.animate({
-          left: `${posX}px`,
-          top: `${posY}px`
-        }, { duration: 500, fill: "forwards" });
+        cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
       });
-      
-      const interactives = document.querySelectorAll('a, button, .svc, .proj-item, .video-overlay, .contact-link');
+      const interactives = document.querySelectorAll('a, button, .svc, .proj-item, .video-overlay, .contact-link, .news-row');
       interactives.forEach(el => {
         el.addEventListener('mouseenter', () => {
           cursorOutline.style.width = '60px';
@@ -896,67 +347,43 @@ footer {
     }
   });
 
-  // Simple intersection observer for scroll animations
   document.addEventListener('DOMContentLoaded', () => {
-    
-    // Preloader Logic
-    const preloader = document.getElementById('preloader');
-    if(preloader) {
-      setTimeout(() => {
-        preloader.classList.add('fade-out');
-        document.body.classList.remove('no-scroll');
-        
-        // Remove from DOM entirely after fade out
-        setTimeout(() => {
-          preloader.remove();
-        }, 1200);
-      }, 2500); // 2.5 seconds loading time
-    }
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
-
-    document.querySelectorAll('.sec-header, .svc, .proj-item, .team-row, .contact-wrap > div').forEach(el => {
+    
+    document.querySelectorAll('.sec-header, .svc, .proj-item, .team-row, .contact-wrap > div, .news-row').forEach(el => {
       el.classList.add('fade-up');
       observer.observe(el);
     });
 
-    // Nav background on scroll
     const nav = document.querySelector('nav');
     window.addEventListener('scroll', () => {
       if(window.scrollY > 50) nav.classList.add('scrolled');
       else nav.classList.remove('scrolled');
     });
 
-    // Horizontal Scroll Magic
     const hScrollSec = document.querySelector('.h-scroll-sec');
     const projList = document.querySelector('.proj-list');
-    
     window.addEventListener('scroll', () => {
       if(!hScrollSec || !projList) return;
       const rect = hScrollSec.getBoundingClientRect();
-      const scrollProgress = -rect.top; 
+      const scrollProgress = -rect.top;
       const maxScroll = rect.height - window.innerHeight;
-      
       if (scrollProgress >= 0 && scrollProgress <= maxScroll) {
         const ratio = scrollProgress / maxScroll;
-        // 128 is padding buffer
-        const maxTranslate = Math.max(0, projList.scrollWidth - window.innerWidth + 128); 
+        const maxTranslate = Math.max(0, projList.scrollWidth - window.innerWidth + 128);
         projList.style.transform = `translateY(-50%) translateX(-${ratio * maxTranslate}px)`;
       } else if (scrollProgress > maxScroll) {
-         const maxTranslate = Math.max(0, projList.scrollWidth - window.innerWidth + 128);
-         projList.style.transform = `translateY(-50%) translateX(-${maxTranslate}px)`;
+        const maxTranslate = Math.max(0, projList.scrollWidth - window.innerWidth + 128);
+        projList.style.transform = `translateY(-50%) translateX(-${maxTranslate}px)`;
       } else {
-         projList.style.transform = `translateY(-50%) translateX(0px)`;
+        projList.style.transform = `translateY(-50%) translateX(0px)`;
       }
     });
 
-    // Video Auto play on hover
     const projItems = document.querySelectorAll('.proj-item');
     projItems.forEach(item => {
       const video = item.querySelector('.proj-video');
@@ -968,52 +395,39 @@ footer {
   });
 </script>
 
-<!-- ── NAV ── -->
 <nav>
   <a class="nav-logo-text" href="#">Studio Ground</a>
   <div class="nav-links">
     <a href="#about">What We Do</a>
     <a href="#projects">Projects</a>
+    <a href="#news">News</a>
     <a href="#team">Team</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
-<!-- ── HERO ── -->
 <div class="hero">
-  <video class="hero-video-bg" autoplay loop muted playsinline>
-    <source src="https://videos.pexels.com/video-files/5820464/5820464-uhd_2560_1440_24fps.mp4" type="video/mp4">
+  <video class="hero-video" autoplay loop muted playsinline>
+    <source src="https://videos.pexels.com/video-files/18069166/18069166-hd_1920_1080_24fps.mp4" type="video/mp4">
   </video>
-  <h1 class="hero-h1">
-    Stories<br>
-    That <em>Move</em><br>
-    the World.
-  </h1>
+  <h1 class="hero-h1">Stories<br>That <em>Move</em><br>the World.</h1>
   <div class="hero-bottom">
-    <p class="hero-desc">
-      스튜디오그라운드는 IP 기획개발 전문 콘텐츠 제작사입니다.<br>
-      원천 IP 발굴부터 영상화·공연화·유통까지—<br>
-      좋은 이야기가 세상에 닿을 수 있도록 합니다.
-    </p>
+    <p class="hero-desc">스튜디오그라운드는 IP 기획개발 전문 콘텐츠 제작사입니다.<br>원천 IP 발굴부터 영상화·공연화·유통까지—<br>좋은 이야기가 세상에 닿을 수 있도록 합니다.</p>
     <div class="hero-tagline">Stories. Grounded.</div>
   </div>
 </div>
 
-<!-- ── SHOWREEL VIDEO ── -->
 <div class="sec-video fade-up" id="showreel">
   <video class="sample-video" autoplay loop muted playsinline>
     <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4" type="video/mp4">
   </video>
   <div class="video-overlay">
-    <div class="play-btn">
-      <div class="play-icon">▶</div>
-    </div>
+    <div class="play-btn"><div class="play-icon">▶</div></div>
     <div class="video-text">Sample Video Placeholder</div>
   </div>
 </div>
 
-<!-- ── WHAT WE DO ── 네이비 섹션 -->
-<div class="sec-navy" id="about">
+<div class="sec-dark" id="about">
   <div class="sec-header">
     <div class="sec-num">01</div>
     <div class="sec-title">What We Do</div>
@@ -1023,31 +437,14 @@ footer {
     성공적인 영상화를 위한 전문적인 기획 솔루션을 제공합니다.
   </p>
   <div class="services">
-    <div class="svc">
-      <div class="svc-n">01 —</div>
-      <div class="svc-title">IP Sourcing<br>& Curation</div>
-      <p class="svc-desc">가능성 있는 원천 IP를 발굴합니다. 웹툰·웹소설 중심.</p>
-    </div>
-    <div class="svc">
-      <div class="svc-n">02 —</div>
-      <div class="svc-title">Professional<br>Planning</div>
-      <p class="svc-desc">전문 프로듀서가 기획합니다. 대본 공동 기획 및 고도화.</p>
-    </div>
-    <div class="svc">
-      <div class="svc-n">03 —</div>
-      <div class="svc-title">OSMU<br>Strategy</div>
-      <p class="svc-desc">하나의 이야기를 드라마·영화·공연으로 확장합니다.</p>
-    </div>
-    <div class="svc">
-      <div class="svc-n">04 —</div>
-      <div class="svc-title">Production<br>Networking</div>
-      <p class="svc-desc">플랫폼·제작사 파트너십으로 편성과 유통을 잇습니다.</p>
-    </div>
+    <div class="svc"><div class="svc-n">01 —</div><div class="svc-title">IP Sourcing<br>& Curation</div><p class="svc-desc">가능성 있는 원천 IP를 발굴합니다. 웹툰·웹소설 중심.</p></div>
+    <div class="svc"><div class="svc-n">02 —</div><div class="svc-title">Professional<br>Planning</div><p class="svc-desc">전문 프로듀서가 기획합니다. 대본 공동 기획 및 고도화.</p></div>
+    <div class="svc"><div class="svc-n">03 —</div><div class="svc-title">OSMU<br>Strategy</div><p class="svc-desc">하나의 이야기를 드라마·영화·공연으로 확장합니다.</p></div>
+    <div class="svc"><div class="svc-n">04 —</div><div class="svc-title">Production<br>Networking</div><p class="svc-desc">플랫폼·제작사 파트너십으로 편성과 유통을 잇습니다.</p></div>
   </div>
 </div>
 
-<!-- ── PROJECTS ── 포레스트 섹션 & 가로 스크롤 -->
-<div class="sec-forest h-scroll-sec" id="projects">
+<div class="sec-black h-scroll-sec" id="projects">
   <div class="h-scroll-sticky">
     <div class="sec-header">
       <div class="sec-num">02</div>
@@ -1055,71 +452,28 @@ footer {
     </div>
     <div class="h-scroll-wrap">
       <div class="proj-list">
-
         <div class="proj-item">
-          <video class="proj-video" loop muted playsinline>
-            <source src="https://videos.pexels.com/video-files/4006114/4006114-uhd_2732_1440_25fps.mp4" type="video/mp4">
-          </video>
-          <div class="proj-content">
-            <div class="proj-genre">Film · Development</div>
-            <div class="proj-title">영감</div>
-            <div class="proj-title-en">Inspiration</div>
-            <p class="proj-note">웹툰 원작. 위즈덤하우스 판권. 로케트필름 공동제작 확정.</p>
-            <div class="proj-badges">
-              <span class="proj-badge" style="border-color: rgba(255,255,255,0.4)">공동제작 확정</span>
-              <span class="proj-badge" style="border-color: rgba(255,255,255,0.4)">27년 개봉 목표</span>
-            </div>
-          </div>
+          <video class="proj-video" loop muted playsinline><source src="https://videos.pexels.com/video-files/4006114/4006114-uhd_2732_1440_25fps.mp4" type="video/mp4"></video>
+          <div class="proj-content"><div class="proj-genre">Film · Development</div><div class="proj-title">영감</div><div class="proj-title-en">Inspiration</div><p class="proj-note">웹툰 원작. 위즈덤하우스 판권. 로케트필름 공동제작 확정.</p><div class="proj-badges"><span class="proj-badge">공동제작 확정</span><span class="proj-badge">27년 개봉 목표</span></div></div>
         </div>
-
+        <div class="proj-item guard-card">
+          <video class="proj-video" loop muted playsinline><source src="https://videos.pexels.com/video-files/3163534/3163534-uhd_2560_1440_30fps.mp4" type="video/mp4"></video>
+          <div class="proj-content"><div class="proj-genre">Short-form Drama</div><div class="proj-title">최애의 경호 외 6건</div><div class="proj-title-en">Short Series</div><p class="proj-note">㈜키노필름 협업.</p><div class="proj-badges"><span class="proj-badge">제작 협업 진행</span></div></div>
+        </div>
         <div class="proj-item">
-          <video class="proj-video" loop muted playsinline>
-            <source src="https://videos.pexels.com/video-files/3163534/3163534-uhd_2560_1440_30fps.mp4" type="video/mp4">
-          </video>
-          <div class="proj-content">
-            <div class="proj-genre">Short-form Drama</div>
-            <div class="proj-title">최애의 경호 외 6건</div>
-            <div class="proj-title-en">Short Series</div>
-            <p class="proj-note">㈜키노필름 협업.</p>
-            <div class="proj-badges">
-              <span class="proj-badge" style="border-color: rgba(255,255,255,0.4)">제작 협업 진행</span>
-            </div>
-          </div>
+          <video class="proj-video" loop muted playsinline><source src="https://videos.pexels.com/video-files/8051284/8051284-hd_1920_1080_25fps.mp4" type="video/mp4"></video>
+          <div class="proj-content"><div class="proj-genre">Web Novel</div><div class="proj-title">이른 밤, 무희에게 총애를</div><div class="proj-title-en">Web Novel IP</div><p class="proj-note">KT블라이스 유료 연재. 판타지 로맨스 장르 월간 1위(1·2월). 25년 8월 완결.</p><div class="proj-badges"></div></div>
         </div>
-
         <div class="proj-item">
-          <video class="proj-video" loop muted playsinline>
-            <source src="https://videos.pexels.com/video-files/8051284/8051284-hd_1920_1080_25fps.mp4" type="video/mp4">
-          </video>
-          <div class="proj-content">
-            <div class="proj-genre">Web Novel</div>
-            <div class="proj-title">이른 밤, 무희에게 총애를</div>
-            <div class="proj-title-en">Web Novel IP</div>
-            <p class="proj-note">KT블라이스 유료 연재. 판타지 로맨스 장르 월간 1위(1·2월). 25년 8월 완결.</p>
-            <div class="proj-badges"></div>
-          </div>
+          <video class="proj-video" loop muted playsinline><source src="https://videos.pexels.com/video-files/5820464/5820464-uhd_2560_1440_24fps.mp4" type="video/mp4"></video>
+          <div class="proj-content"><div class="proj-genre">Drama · 6-Part</div><div class="proj-title">영화 〈자리〉</div><div class="proj-title-en">The Place · Series</div><p class="proj-note">대본 기획. 콘진원 우수기획안 선정. 26년 하반기 편성 목표.</p><div class="proj-badges"></div></div>
         </div>
-
-        <div class="proj-item">
-          <video class="proj-video" loop muted playsinline>
-            <source src="https://videos.pexels.com/video-files/5820464/5820464-uhd_2560_1440_24fps.mp4" type="video/mp4">
-          </video>
-          <div class="proj-content">
-            <div class="proj-genre">Drama · 6-Part</div>
-            <div class="proj-title">영화 〈자리〉</div>
-            <div class="proj-title-en">The Place · Series</div>
-            <p class="proj-note">대본 기획. 콘진원 우수기획안 선정. 26년 하반기 편성 목표.</p>
-            <div class="proj-badges"></div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── NEWS & PRESS 게시판 ── (네이비/화이트 톤) -->
-<div class="sec-navy" id="news">
+<div class="sec-dark" id="news">
   <div class="sec-header">
     <div class="sec-num">03</div>
     <div class="sec-title">News & Press</div>
@@ -1143,56 +497,19 @@ footer {
   </div>
 </div>
 
-<!-- ── TEAM ── 에스프레소 섹션 -->
-<div class="sec-espresso" id="team">
+<div class="sec-black" id="team">
   <div class="sec-header">
     <div class="sec-num">04</div>
     <div class="sec-title">Team</div>
   </div>
   <div class="team-list">
-
-    <div class="team-row">
-      <div class="team-info">
-        <div class="team-name">이준호</div>
-        <div class="team-role">CEO · Executive Producer</div>
-      </div>
-      <div class="team-credits">
-        <span class="credit">前 로고스필름 기획팀장</span>
-        <span class="credit">부산영상위 심사위원 3회</span>
-      </div>
-    </div>
-
-    <div class="team-row">
-      <div class="team-info">
-        <div class="team-name">고봉수</div>
-        <div class="team-role">Director</div>
-      </div>
-      <div class="team-credits">
-        <span class="credit">귤레귤레</span>
-        <span class="credit">빚가리</span>
-        <span class="credit">습도 다소 높음</span>
-        <span class="credit">델타보이즈</span>
-        <span class="credit">K-히어로 골든타임즈</span>
-      </div>
-    </div>
-
-    <div class="team-row">
-      <div class="team-info">
-        <div class="team-name">이원회</div>
-        <div class="team-role">Director</div>
-      </div>
-      <div class="team-credits">
-        <span class="credit">어쩌면 해피엔딩</span>
-        <span class="credit">카모플라쥬</span>
-        <span class="credit">계속 나를 망상해줘요</span>
-      </div>
-    </div>
-
+    <div class="team-row"><div class="team-info"><div class="team-name">이준호</div><div class="team-role">CEO · Executive Producer</div></div><div class="team-credits"><span class="credit">前 로고스필름 기획팀장</span><span class="credit">부산영상위 심사위원 3회</span></div></div>
+    <div class="team-row"><div class="team-info"><div class="team-name">고봉수</div><div class="team-role">Director</div></div><div class="team-credits"><span class="credit">귤레귤레</span><span class="credit">빚가리</span><span class="credit">습도 다소 높음</span><span class="credit">델타보이즈</span><span class="credit">K-히어로 골든타임즈</span></div></div>
+    <div class="team-row"><div class="team-info"><div class="team-name">이원회</div><div class="team-role">Director</div></div><div class="team-credits"><span class="credit">어쩌면 해피엔딩</span><span class="credit">카모플라쥬</span><span class="credit">계속 나를 망상해줘요</span></div></div>
   </div>
 </div>
 
-<!-- ── CONTACT ── 슬레이트 섹션 -->
-<div class="sec-slate" id="contact">
+<div class="sec-dark" id="contact">
   <div class="sec-header">
     <div class="sec-num">05</div>
     <div class="sec-title">Contact</div>
@@ -1200,48 +517,24 @@ footer {
   <div class="contact-wrap">
     <div>
       <div class="rep-label">Representative</div>
-      <div class="rep-name">이준호</div>
-      <div class="rep-en">Juneho LEE</div>
+      <div class="rep-name">Juneho,<br>LEE</div>
+      <div class="rep-kr">이 준 호</div>
       <div class="rep-pos">CEO · Planning Producer</div>
       <div class="contact-links">
-        <a class="contact-link" href="mailto:heyjune@studioground.co.kr">
-          <span class="cl-type">Email</span>
-          <span class="cl-val">heyjune@studioground.co.kr</span>
-        </a>
-        <a class="contact-link" href="mailto:studioground38@naver.com">
-          <span class="cl-type">—</span>
-          <span class="cl-val">studioground38@naver.com</span>
-        </a>
-        </a>
-        <a class="contact-link" href="https://instagram.com/studioground.official" target="_blank">
-          <span class="cl-type">Instagram</span>
-          <span class="cl-val">@studioground.official</span>
-        </a>
+        <a class="contact-link" href="mailto:heyjune@studioground.co.kr"><span class="cl-type">Email</span><span class="cl-val">heyjune@studioground.co.kr</span></a>
+        <a class="contact-link" href="mailto:studioground38@naver.com"><span class="cl-type">—</span><span class="cl-val">studioground38@naver.com</span></a>
+        <a class="contact-link" href="https://instagram.com/studioground.official" target="_blank"><span class="cl-type">Instagram</span><span class="cl-val">@studioground.official</span></a>
       </div>
     </div>
     <div>
       <div class="vision-label">Vision</div>
-      <p class="vision-q">
-        "이야기가 단단한 기반(Ground) 위에서<br>
-        스스로 성장하고<br>
-        세상으로 나아갈 수 있는<br>
-        생태계를 만듭니다."
-      </p>
-      <div class="co-info">
-        <div>스튜디오그라운드 주식회사</div>
-        <div>설립 2023년 2월 10일</div>
-        <div>인천광역시 연수구 컨벤시아대로 165</div>
-        <div>포스코타워 송도 412호, 26F</div>
-      </div>
+      <p class="vision-q">"이야기가 단단한 기반(Ground) 위에서<br>스스로 성장하고<br>세상으로 나아갈 수 있는<br>생태계를 만듭니다."</p>
+      <div class="co-info"><div>스튜디오그라운드 주식회사</div><div>설립 2023년 2월 10일</div><div>인천광역시 연수구 컨벤시아대로 165</div><div>포스코타워 송도 412호, 26F</div></div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="ft-copy">© 2025 Studio Ground Inc. · 스튜디오그라운드 주식회사</div>
-  <div class="ft-tag">Stories. Grounded.</div>
-</footer>
+<footer><div class="ft-copy">© 2025 Studio Ground Inc. · 스튜디오그라운드 주식회사</div><div class="ft-tag">Stories. Grounded.</div></footer>
 
 </body>
 </html>
