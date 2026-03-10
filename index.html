@@ -122,15 +122,20 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 ══════════════════════════ */
 .sec-video {
   position: relative; width: 100%; height: 82vh; min-height: 520px; overflow: hidden;
-  background: #000; display: flex; align-items: center; justify-content: center;
+  background: #111; display: flex; align-items: center; justify-content: center;
   border-bottom: 1px solid var(--line);
 }
 .sample-video {
   position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto;
-  transform: translate(-50%, -50%) scale(1.0); object-fit: cover; opacity: 0.4;
+  transform: translate(-50%, -50%) scale(1.0); object-fit: cover; opacity: 0.6;
   transition: opacity 0.8s, transform 3s ease-out;
+  /* 영상 로딩 실패 시에도 검정 화면 대신 포스터 이미지가 보이게 강제 Fallback 처리 */
+  background-color: #111;
+  background-image: url('https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=1920');
+  background-size: cover;
+  background-position: center;
 }
-.sec-video:hover .sample-video { opacity: 0.7; transform: translate(-50%, -50%) scale(1.03); }
+.sec-video:hover .sample-video { opacity: 0.8; transform: translate(-50%, -50%) scale(1.03); }
 
 /* Showreel Playing State */
 .sec-video.is-playing .sample-video { opacity: 1; transform: translate(-50%, -50%) scale(1.0); }
@@ -362,58 +367,98 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 .news-title { font-size: 18px; font-weight: 400; color: var(--ink); transition: color 0.3s, transform 0.3s; line-height: 1.5; }
 .sec-white .news-title { color: #333; font-weight: 500; font-size: 18px; }
 
+.news-sub { display: block; font-size: 15px; color: #666; margin-top: 4px; font-weight: 400; transition: color 0.3s; }
+.news-row:hover .news-sub { color: rgba(140, 28, 42, 0.8); }
+
 .news-row:hover .news-title { color: var(--burgundy); }
 .sec-white .news-row:hover .news-title { color: var(--burgundy); transform: translateX(6px); }
 
 /* Team */
+.sec-team { background: #000; position: relative; border-top: 1px solid var(--line); }
+.sec-team .sec-header { display: flex; align-items: flex-end; justify-content: space-between; }
+.team-label { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; color: var(--ink-soft); text-align: right; line-height: 1.4; }
+
 .team-list { padding: 0 64px; border-bottom: 1px solid var(--line-soft); }
 .team-row {
   display: grid; grid-template-columns: 240px 1fr; border-bottom: 1px solid var(--line-soft); align-items: center;
   min-height: 100px; transition: background 0.4s; cursor: default;
 }
 .team-row:last-child { border-bottom: none; }
-.team-row:hover { background: rgba(255,255,255,0.02); }
-.team-row:hover .team-name { color: var(--gold); }
+.team-row:hover { background: rgba(255,255,255,0.03); }
+.team-row:hover .team-name { color: var(--burgundy); }
 .team-info { padding: 40px 0; padding-right: 40px; border-right: 1px solid var(--line-soft); }
-.team-name { transition: color 0.3s; font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; color: #fff; margin-bottom: 8px; }
-.team-role { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2px; color: var(--burgundy); text-transform: uppercase; }
+.team-name { transition: color 0.4s; font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; color: #fff; margin-bottom: 12px; }
+.team-role { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
 .team-credits { padding: 30px 0 30px 60px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* Tag Styles */
 .credit {
-  font-size: 13px; font-weight: 300; color: var(--ink); border: 1px solid var(--burgundy); padding: 8px 16px; border-radius: 20px; white-space: nowrap; background: rgba(255,255,255,0.02);
+  font-size: 13px; font-weight: 400; color: #111; border: 1px solid #EAEAEA; padding: 8px 16px; border-radius: 20px; white-space: nowrap; background: #f5f5f5; transition: background 0.3s, transform 0.3s;
+}
+.credit.career {
+  color: #fff; border: 1px solid rgba(140, 28, 42, 0.4); background: rgba(140, 28, 42, 0.8);
+}
+.team-row:hover .credit { transform: translateY(-3px); }
+
+/* Contact & Ending Scene */
+.sec-contact {
+  background: #2F2628; position: relative; border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+/* Film Grain Envelope */
+.sec-contact::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  opacity: 0.02; mix-blend-mode: screen; pointer-events: none; z-index: 1;
+}
+/* Soft Vignette */
+.sec-contact::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none; z-index: 2;
 }
 
-/* Contact */
+.ending-copy {
+  position: relative; z-index: 10; padding: 100px 64px 0; text-align: center;
+}
+.ending-copy h2 {
+  font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 400; font-style: italic; color: #fff; letter-spacing: -1px; margin-bottom: 24px;
+}
+.accent-word {
+  color: var(--burgundy);
+  font-style: italic;
+}
+
 .contact-wrap {
-  padding: 100px 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
-  border-bottom: 1px solid var(--line);
+  position: relative; z-index: 10; padding: 80px 64px 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
 }
 .rep-label, .vision-label {
   font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 3px; color: var(--gold); text-transform: uppercase;
 }
 .rep-label { margin-bottom: 24px; }
 .vision-label { margin-bottom: 32px; }
-.rep-name { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 400; line-height: 1.0; letter-spacing: -2px; color: #fff; margin-bottom: 12px; }
-.rep-kr { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.72); margin-bottom: 8px; }
-.rep-pos {
-  font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 3px; color: var(--burgundy); text-transform: uppercase; margin-bottom: 60px;
-}
-.contact-links { border-top: 1px solid var(--line); }
-.contact-link {
-  display: flex; align-items: center; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--line);
-  text-decoration: none; transition: opacity 0.3s, padding-left 0.3s;
-}
-.contact-link:hover { opacity: 1; padding-left: 10px; }
-.contact-link:hover .cl-val { color: var(--gold); }
-.cl-type {
-  font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.62);
-  text-transform: uppercase; width: 80px; flex-shrink: 0;
-}
-.cl-val { font-size: 15px; font-weight: 300; color: #fff; transition: color 0.3s; }
+.contact-links-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 80px; }
+.cl-item { display: flex; flex-direction: column; gap: 8px; }
+.cl-item-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 2px; }
+.cl-item-val { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 300; color: #fff; text-decoration: none; transition: color 0.3s; }
+.cl-item-val:hover { color: var(--gold); }
+
 .vision-q {
-  font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; font-style: italic; line-height: 1.8; color: #fff; margin-bottom: 60px;
+  font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 400; line-height: 1.8; color: #fff; margin-bottom: 60px; letter-spacing: -0.5px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
+
+.cta-btn {
+  display: inline-block; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+  color: #fff; border: 1px solid var(--burgundy); padding: 18px 40px; border-radius: 4px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 80px; background: transparent; cursor: pointer;
+}
+.cta-btn:hover {
+  background: var(--burgundy); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(140, 28, 42, 0.3);
+}
+
 .co-info {
-  font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 1.5px; color: rgba(255,255,255,0.66); line-height: 2.6;
+  display: flex; flex-direction: column; font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 500; letter-spacing: 2px; color: rgba(255,255,255,0.8); text-transform: uppercase; line-height: 1.8;
 }
 
 /* Footer */
@@ -449,6 +494,8 @@ footer {
   .news-row { grid-template-columns: 100px 80px 1fr; gap: 16px; }
   .sec-white .news-row { grid-template-columns: 80px 80px 1fr; }
   .sec-white .news-thumb { display: none; }
+  .ending-copy h2 { font-size: 38px; }
+  .vision-q { font-size: 24px; }
 }
 </style>
 </head>
@@ -589,7 +636,9 @@ footer {
 </div>
 
 <div class="sec-video fade-up" id="showreel" style="cursor: pointer;">
+  <!-- 영상 교체 구조: 외부 URL 대신 실제 운영용 서버 로컬 URL('showreel.mp4')로 쉽게 변경 가능하도록 컨테이너화 했습니다. -->
   <video class="sample-video" id="showreel-video" loop playsinline poster="https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=1920">
+    <!-- 실제 영상 소스 위치 (로컬 파일 사용 시: <source src="sample-showreel.mp4" type="video/mp4">) -->
     <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4" type="video/mp4">
   </video>
   <div class="video-overlay">
@@ -603,19 +652,34 @@ footer {
     const showreelSec = document.getElementById('showreel');
     const showreelVideo = document.getElementById('showreel-video');
     const showreelIcon = document.getElementById('showreel-icon');
+    const showreelText = document.getElementById('showreel-text');
     
-    if (showreelSec && showreelVideo) {
+    if (showreelSec && showreelVideo && showreelIcon && showreelText) {
       showreelSec.addEventListener('click', () => {
         if (showreelVideo.paused) {
-          showreelVideo.play();
-          showreelSec.classList.add('is-playing');
-          showreelIcon.innerHTML = '❚❚';
-          showreelIcon.style.fontSize = '12px';
+          // Play Promise 에러 핸들링 (로드 실패 시 안전장치)
+          const playPromise = showreelVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              showreelSec.classList.add('is-playing');
+              showreelIcon.innerHTML = '❚❚';
+              showreelIcon.style.fontSize = '12px';
+              showreelText.innerText = 'Pause Showreel';
+            }).catch(error => {
+              console.error("Video load or play failed:", error);
+              showreelIcon.innerHTML = '✕';
+              showreelIcon.style.fontSize = '16px';
+              showreelText.innerText = 'Preview Unavailable';
+              // 에러 시 더 어둡게 하여 폴백 텍스트를 보여줌 처리
+              showreelVideo.style.opacity = '0.5';
+            });
+          }
         } else {
           showreelVideo.pause();
           showreelSec.classList.remove('is-playing');
           showreelIcon.innerHTML = '▶';
           showreelIcon.style.fontSize = '20px';
+          showreelText.innerText = 'Play Showreel';
         }
       });
     }
@@ -690,8 +754,8 @@ footer {
       <div class="news-date">2026. 05</div>
       <div class="news-cat">IP Launch</div>
       <div class="news-title">
-        웹소설 &lt;리코더를 불면 몬스터가 따라옴&gt;<br>
-        네이버 시리즈 런칭 · 작가컴퍼니 유통
+        웹소설 &lt;피리를 불면 몬스터가 따라옴&gt;
+        <span class="news-sub">· 네이버 시리즈 런칭 · 작가컴퍼니 유통</span>
       </div>
     </div>
 
@@ -700,7 +764,7 @@ footer {
       <div class="news-date">2026. 03</div>
       <div class="news-cat">Production</div>
       <div class="news-title">
-        영화 &lt;영감&gt; (주)로케트필름과 공동제작 확정
+        영화 &lt;영감&gt; 공동제작 확정
       </div>
     </a>
 
@@ -709,7 +773,6 @@ footer {
       <div class="news-date">2026. 03</div>
       <div class="news-cat">Press</div>
       <div class="news-title">
-        경찰청 실종경보 홍보영상 기획 · 제작 
         경찰청 ‘실종경보 홍보영상’ 첫 공개… “국민이 골든타임을 지켰다”
       </div>
     </a>
@@ -719,47 +782,93 @@ footer {
       <div class="news-date">2024. 02</div>
       <div class="news-cat">IP News</div>
       <div class="news-title">
-        웹소설 '이른 밤, 무희에게 총애를'<br>
-        블라이스 판타지 로맨스 장르 월간 1위 (2024년 1·2월)
+        웹소설 '이른 밤, 무희에게 총애를'
+        <span class="news-sub">· 블라이스 판타지 로맨스 장르 월간 1위 (2024년 1·2월)</span>
       </div>
     </div>
 
   </div>
 </div>
 
-<div class="sec-black" id="team">
+<div class="sec-team" id="team">
   <div class="sec-header">
-    <div class="sec-num">04</div>
-    <div class="sec-title">Team</div>
+    <div>
+      <div class="sec-num">04</div>
+      <div class="sec-title">Team</div>
+    </div>
+    <div class="team-label">Creative Team<br>Studio Ground</div>
   </div>
   <div class="team-list">
-    <div class="team-row"><div class="team-info"><div class="team-name">이준호</div><div class="team-role">CEO · Executive Producer</div></div><div class="team-credits"><span class="credit">前 로고스필름 기획팀장</span><span class="credit">부산영상위 심사위원 3회</span></div></div>
-    <div class="team-row"><div class="team-info"><div class="team-name">고봉수</div><div class="team-role">Director</div></div><div class="team-credits"><span class="credit">귤레귤레</span><span class="credit">빚가리</span><span class="credit">습도 다소 높음</span><span class="credit">델타보이즈</span><span class="credit">K-히어로 골든타임즈</span></div></div>
-    <div class="team-row"><div class="team-info"><div class="team-name">이원회</div><div class="team-role">Director</div></div><div class="team-credits"><span class="credit">어쩌면 해피엔딩</span><span class="credit">카모플라쥬</span><span class="credit">계속 나를 망상해줘요</span></div></div>
+    <div class="team-row">
+      <div class="team-info">
+        <div class="team-name">이준호</div>
+        <div class="team-role">CEO · Executive Producer</div>
+      </div>
+      <div class="team-credits">
+        <span class="credit career">前 로고스필름 기획팀장</span>
+        <span class="credit career">부산영상위원회 심사위원 (3회)</span>
+      </div>
+    </div>
+    <div class="team-row">
+      <div class="team-info">
+        <div class="team-name">고봉수</div>
+        <div class="team-role">Director</div>
+      </div>
+      <div class="team-credits">
+        <span class="credit">델타보이즈</span>
+        <span class="credit">귤레귤레</span>
+        <span class="credit">습도 다소 높음</span>
+        <span class="credit">빚가리</span>
+        <span class="credit">K-히어로 골든타임즈</span>
+      </div>
+    </div>
+    <div class="team-row">
+      <div class="team-info">
+        <div class="team-name">이원회</div>
+        <div class="team-role">Director</div>
+      </div>
+      <div class="team-credits">
+        <span class="credit">어쩌면 해피엔딩</span>
+        <span class="credit">카모플라쥬</span>
+        <span class="credit">계속 나를 망상해줘요</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="sec-dark" id="contact">
-  <div class="sec-header">
-    <div class="sec-num">05</div>
-    <div class="sec-title">Contact</div>
+<div class="sec-contact" id="contact">
+  <div class="ending-copy">
+    <h2>Let's build the next <span class="accent-word">story</span> together.</h2>
   </div>
   <div class="contact-wrap">
     <div>
-      <div class="rep-label">Representative</div>
-      <div class="rep-name">Juneho,<br>LEE</div>
-      <div class="rep-kr">이 준 호</div>
-      <div class="rep-pos">CEO · Planning Producer</div>
-      <div class="contact-links">
-        <a class="contact-link" href="mailto:heyjune@studioground.co.kr"><span class="cl-type">Email</span><span class="cl-val">heyjune@studioground.co.kr</span></a>
-        <a class="contact-link" href="mailto:studioground38@naver.com"><span class="cl-type">—</span><span class="cl-val">studioground38@naver.com</span></a>
-        <a class="contact-link" href="https://instagram.com/studioground.official" target="_blank"><span class="cl-type">Instagram</span><span class="cl-val">@studioground.official</span></a>
-      </div>
+      <div class="vision-label">Vision</div>
+      <p class="vision-q">"<span class="accent-word">이야기</span>가 단단한 기반 위에서<br>스스로 성장하고<br>세상으로 나아갈 수 있는<br>생태계를 만듭니다."</p>
+      <a href="mailto:heyjune@studioground.co.kr" class="cta-btn">Send Project Proposal</a>
     </div>
     <div>
-      <div class="vision-label">Vision</div>
-      <p class="vision-q">"이야기가 단단한 기반(Ground) 위에서<br>스스로 성장하고<br>세상으로 나아갈 수 있는<br>생태계를 만듭니다."</p>
-      <div class="co-info"><div>스튜디오그라운드 주식회사</div><div>설립 2023년 2월 10일</div><div>인천광역시 연수구 컨벤시아대로 165</div><div>포스코타워 송도 412호, 26F</div></div>
+      <div class="rep-label">Contact</div>
+      <div class="contact-links-list">
+        <div class="cl-item">
+          <span class="cl-item-label">Email</span>
+          <a href="mailto:heyjune@studioground.co.kr" class="cl-item-val">heyjune@studioground.co.kr</a>
+        </div>
+        <div class="cl-item">
+          <span class="cl-item-label">General</span>
+          <a href="mailto:studioground38@naver.com" class="cl-item-val">studioground38@naver.com</a>
+        </div>
+        <div class="cl-item">
+          <span class="cl-item-label">Instagram</span>
+          <a href="https://instagram.com/studioground.official" target="_blank" class="cl-item-val">@studioground.official</a>
+        </div>
+      </div>
+
+      <div class="rep-label">Studio Ground Inc.</div>
+      <div class="co-info">
+        <div>Founded 2023</div>
+        <div style="margin-top: 16px;">Incheon, Korea</div>
+        <div>POSCO Tower Songdo</div>
+      </div>
     </div>
   </div>
 </div>
