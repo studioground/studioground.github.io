@@ -103,7 +103,6 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
   color: var(--burgundy);
   animation: wineGlow 4s ease-in-out infinite;
 }
-
 @keyframes wineGlow {
   0% { text-shadow: 0 0 4px rgba(140,28,42,0.2); }
   50% { text-shadow: 0 0 40px rgba(140,28,42,0.95), 0 0 20px rgba(140,28,42,0.8); }
@@ -121,27 +120,47 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
    VIDEOS (Showreel)
 ══════════════════════════ */
 .sec-video {
-  position: relative; width: 100%; height: 82vh; min-height: 520px; overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 82vh;
+  min-height: 520px;
+  overflow: hidden;
   background-color: #000;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-bottom: 1px solid var(--line);
 }
 .showreel-poster {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5;
-  transition: opacity 0.8s, transform 3s ease-out;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  transition: opacity 0.5s ease, transform 2s ease;
 }
-.sec-video:hover .showreel-poster { opacity: 0.7; transform: scale(1.03); }
+.sec-video:hover .showreel-poster {
+  opacity: 0.72;
+  transform: scale(1.02);
+}
 .sample-video {
-  position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto;
-  transform: translate(-50%, -50%); object-fit: cover; opacity: 0;
-  transition: opacity 0.8s; pointer-events: none;
+  position: absolute;
+  top: 50%; left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }
-
-/* Showreel Playing State */
 .sec-video.is-playing .showreel-poster { opacity: 0; }
 .sec-video.is-playing .sample-video { opacity: 1; }
-.sec-video.is-playing .video-text { opacity: 0; transition: opacity 0.4s; }
-.sec-video.is-playing .play-btn { opacity: 0; transition: opacity 0.4s; }
+.sec-video.is-playing .video-text { opacity: 0; transition: opacity 0.3s; }
+.sec-video.is-playing .play-btn { opacity: 0; transition: opacity 0.3s; }
 .sec-video.is-playing:hover .play-btn { opacity: 1; border-color: transparent; }
 
 .video-overlay {
@@ -214,22 +233,21 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
   padding: 60px 48px; border-right: 1px solid var(--line-soft); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative; overflow: hidden; cursor: default;
 }
-.sec-white .svc { border-right: 1px solid rgba(0,0,0,0.1); background: transparent; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1;}
+.sec-white .svc { border-right: 1px solid rgba(0,0,0,0.1); background: transparent; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
 .svc::after {
   content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(140, 28, 42, 0.1)); opacity: 0; transition: opacity 0.4s; z-index: 0;
 }
-
 .sec-white .svc::after { display: none; }
 
 .svc:last-child { border-right: none; }
 .svc:hover { background: #0b0b0b; }
 
 /* Enhanced Hover for Editorial White */
-.sec-white .svc:hover { 
-  background: var(--burgundy); 
-  transform: translateY(-12px); 
-  box-shadow: 0 20px 40px rgba(140, 28, 42, 0.2); 
-  border-color: transparent; 
+.sec-white .svc:hover {
+  background: var(--burgundy);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(140, 28, 42, 0.2);
+  border-color: transparent;
 }
 
 .svc:hover::after { opacity: 1; }
@@ -285,10 +303,10 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   flex-shrink: 0;
 }
-.proj-item:hover { 
-  transform: translateY(-12px); 
-  border-color: rgba(255,255,255,0.3); 
-  box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 50px rgba(140, 28, 42, 0.6); 
+.proj-item:hover {
+  transform: translateY(-12px);
+  border-color: rgba(255,255,255,0.3);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 50px rgba(140, 28, 42, 0.6);
 }
 
 /* Cinematic Light Sweep Overlay */
@@ -406,13 +424,11 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
   background: #2F2628; position: relative; border-top: 1px solid var(--line);
   overflow: hidden;
 }
-/* Film Grain Envelope */
 .sec-contact::before {
   content: ''; position: absolute; inset: 0;
   background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
   opacity: 0.02; mix-blend-mode: screen; pointer-events: none; z-index: 1;
 }
-/* Soft Vignette */
 .sec-contact::after {
   content: ''; position: absolute; inset: 0;
   background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.35) 100%);
@@ -480,7 +496,6 @@ footer {
   nav, .hero, .sec-header, .sec-lead, .news-list, .team-list, .contact-wrap, footer { padding-left: 24px; padding-right: 24px; }
   .proj-list { left: 24px; padding-right: 48px; }
   .proj-item { flex: 0 0 320px; height: 50vh; min-height: 350px; }
-  .h-scroll-sec { height: 250vh; }
   .proj-content { padding: 84px 32px 32px; }
   .hero-h1 { font-size: clamp(46px, 11vw, 72px); }
   .hero-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
@@ -506,112 +521,144 @@ footer {
 <div class="cursor-outline" data-cursor-outline></div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia("(pointer: fine)").matches) {
-      const cursorDot = document.querySelector('[data-cursor-dot]');
-      const cursorOutline = document.querySelector('[data-cursor-outline]');
-      window.addEventListener('mousemove', (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
-        cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.matchMedia("(pointer: fine)").matches) {
+    const cursorDot = document.querySelector('[data-cursor-dot]');
+    const cursorOutline = document.querySelector('[data-cursor-outline]');
+    window.addEventListener('mousemove', (e) => {
+      const posX = e.clientX;
+      const posY = e.clientY;
+      cursorDot.style.left = `${posX}px`;
+      cursorDot.style.top = `${posY}px`;
+      cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+    });
+    const interactives = document.querySelectorAll('a, button, .svc, .proj-item, .video-overlay, .contact-link, .news-row');
+    interactives.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursorOutline.style.width = '60px';
+        cursorOutline.style.height = '60px';
+        cursorOutline.style.borderColor = 'transparent';
+        cursorOutline.style.backgroundColor = 'rgba(140, 28, 42, 0.2)';
       });
-      const interactives = document.querySelectorAll('a, button, .svc, .proj-item, .video-overlay, .contact-link, .news-row');
-      interactives.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          cursorOutline.style.width = '60px';
-          cursorOutline.style.height = '60px';
-          cursorOutline.style.borderColor = 'transparent';
-          cursorOutline.style.backgroundColor = 'rgba(140, 28, 42, 0.2)';
-        });
-        el.addEventListener('mouseleave', () => {
-          cursorOutline.style.width = '40px';
-          cursorOutline.style.height = '40px';
-          cursorOutline.style.borderColor = 'rgba(196, 162, 101, 0.5)';
-          cursorOutline.style.backgroundColor = 'transparent';
-        });
+      el.addEventListener('mouseleave', () => {
+        cursorOutline.style.width = '40px';
+        cursorOutline.style.height = '40px';
+        cursorOutline.style.borderColor = 'rgba(196, 162, 101, 0.5)';
+        cursorOutline.style.backgroundColor = 'transparent';
       });
-    }
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.sec-header, .svc, .proj-item, .team-row, .contact-wrap > div, .news-row, #showreel').forEach(el => {
+    el.classList.add('fade-up');
+    observer.observe(el);
   });
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
-    
-    document.querySelectorAll('.sec-header, .svc, .proj-item, .team-row, .contact-wrap > div, .news-row').forEach(el => {
-      el.classList.add('fade-up');
-      observer.observe(el);
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  const projList = document.querySelector('.proj-list');
+  if (projList) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    projList.addEventListener('mousedown', (e) => {
+      isDown = true;
+      projList.classList.add('dragging');
+      startX = e.pageX - projList.offsetLeft;
+      scrollLeft = projList.scrollLeft;
+    });
+    projList.addEventListener('mouseleave', () => {
+      isDown = false;
+      projList.classList.remove('dragging');
+    });
+    projList.addEventListener('mouseup', () => {
+      isDown = false;
+      projList.classList.remove('dragging');
+    });
+    projList.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - projList.offsetLeft;
+      const walk = (x - startX) * 2;
+      projList.scrollLeft = scrollLeft - walk;
     });
 
-    const nav = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-      if(window.scrollY > 50) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
-    });
+    const prevBtn = document.querySelector('.proj-nav.prev');
+    const nextBtn = document.querySelector('.proj-nav.next');
+    if (prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', () => {
+        projList.scrollBy({ left: -490, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', () => {
+        projList.scrollBy({ left: 490, behavior: 'smooth' });
+      });
+    }
+  }
 
-    const projList = document.querySelector('.proj-list');
-    if (projList) {
-      let isDown = false;
-      let startX;
-      let scrollLeft;
-
-      projList.addEventListener('mousedown', (e) => {
-        isDown = true;
-        projList.classList.add('dragging');
-        startX = e.pageX - projList.offsetLeft;
-        scrollLeft = projList.scrollLeft;
+  const projItems = document.querySelectorAll('.proj-item');
+  projItems.forEach(item => {
+    const media = item.querySelector('.proj-media');
+    if (media && media.tagName.toLowerCase() === 'video') {
+      item.addEventListener('mouseenter', () => {
+        if (media.paused) media.play().catch(() => {});
       });
-      projList.addEventListener('mouseleave', () => {
-        isDown = false;
-        projList.classList.remove('dragging');
+      item.addEventListener('mouseleave', () => {
+        media.pause();
       });
-      projList.addEventListener('mouseup', () => {
-        isDown = false;
-        projList.classList.remove('dragging');
-      });
-      projList.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - projList.offsetLeft;
-        const walk = (x - startX) * 2;
-        projList.scrollLeft = scrollLeft - walk;
-      });
-      
-      const prevBtn = document.querySelector('.proj-nav.prev');
-      const nextBtn = document.querySelector('.proj-nav.next');
-      if(prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', () => {
-          projList.scrollBy({ left: -490, behavior: 'smooth' });
-        });
-        nextBtn.addEventListener('click', () => {
-          projList.scrollBy({ left: 490, behavior: 'smooth' });
-        });
-      }
     }
 
-    const projItems = document.querySelectorAll('.proj-item');
-    projItems.forEach(item => {
-      const media = item.querySelector('.proj-media');
-      if (media && media.tagName.toLowerCase() === 'video') {
-        item.addEventListener('mouseenter', () => {
-          if (media.paused) media.play().catch(()=>{});
-        });
-        item.addEventListener('mouseleave', () => {
-          media.pause();
-        });
-      }
-      
-      item.addEventListener('click', (e) => {
-        const title = item.querySelector('.proj-title');
-        const projName = title ? title.innerText : '';
-        alert(`[Project Detail 모달 창 이동]\n선택한 프로젝트: ${projName}`);
-      });
+    item.addEventListener('click', () => {
+      const title = item.querySelector('.proj-title');
+      const projName = title ? title.innerText : '';
+      alert(`[Project Detail 모달 창 이동]\n선택한 프로젝트: ${projName}`);
     });
   });
+
+  const showreelSec = document.getElementById('showreel');
+  const showreelVideo = document.getElementById('showreel-video');
+  const showreelIcon = document.getElementById('showreel-icon');
+  const showreelText = document.getElementById('showreel-text');
+
+  if (!showreelSec || !showreelVideo || !showreelIcon || !showreelText) return;
+
+  showreelSec.addEventListener('click', () => {
+    if (showreelText.innerText === 'Preview Unavailable') return;
+
+    if (showreelVideo.paused) {
+      showreelVideo.play().then(() => {
+        showreelSec.classList.add('is-playing');
+        showreelIcon.innerHTML = '❚❚';
+        showreelIcon.style.fontSize = '12px';
+        showreelText.innerText = 'Pause Showreel';
+      }).catch((error) => {
+        console.error('Video load or play failed:', error);
+        showreelSec.classList.remove('is-playing');
+        showreelIcon.innerHTML = '✕';
+        showreelIcon.style.fontSize = '16px';
+        showreelText.innerText = 'Preview Unavailable';
+      });
+    } else {
+      showreelVideo.pause();
+      showreelSec.classList.remove('is-playing');
+      showreelIcon.innerHTML = '▶';
+      showreelIcon.style.fontSize = '20px';
+      showreelText.innerText = 'Play Showreel';
+    }
+  });
+});
 </script>
 
 <nav>
@@ -636,55 +683,31 @@ footer {
   </div>
 </div>
 
-<div class="sec-video fade-up" id="showreel" style="cursor: pointer;">
-  <img class="showreel-poster" id="showreel-poster" src="showreel-poster.jpg" alt="Showreel Preview">
-  <video id="showreel-video" class="sample-video" loop muted playsinline preload="metadata" poster="showreel-poster.jpg">
-    <source src="showreel.mp4" type="video/mp4">
+<div class="sec-video" id="showreel" style="cursor:pointer;">
+  <img
+    class="showreel-poster"
+    id="showreel-poster"
+    src="https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=1920"
+    alt="Showreel Preview"
+  >
+  <video
+    id="showreel-video"
+    class="sample-video"
+    loop
+    muted
+    playsinline
+    preload="metadata"
+    poster="https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=1920"
+  >
+    <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4" type="video/mp4">
   </video>
   <div class="video-overlay">
-    <div class="play-btn"><div class="play-icon" id="showreel-icon">▶</div></div>
+    <div class="play-btn">
+      <div class="play-icon" id="showreel-icon">▶</div>
+    </div>
     <div class="video-text" id="showreel-text">Play Showreel</div>
   </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const showreelSec = document.getElementById('showreel');
-    const showreelPoster = document.getElementById('showreel-poster');
-    const showreelVideo = document.getElementById('showreel-video');
-    const showreelIcon = document.getElementById('showreel-icon');
-    const showreelText = document.getElementById('showreel-text');
-    
-    if (showreelSec && showreelVideo && showreelIcon && showreelText) {
-      showreelSec.addEventListener('click', () => {
-        if (showreelVideo.paused) {
-          const playPromise = showreelVideo.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              showreelSec.classList.add('is-playing');
-              showreelIcon.innerHTML = '❚❚';
-              showreelIcon.style.fontSize = '12px';
-              showreelText.innerText = 'Pause Showreel';
-            }).catch(error => {
-              console.error("Video load or play failed:", error);
-              showreelSec.classList.remove('is-playing');
-              showreelIcon.innerHTML = '✕';
-              showreelIcon.style.fontSize = '16px';
-              showreelText.innerText = 'Preview Unavailable';
-              // 포스터는 이미 img 태그로 띄워져 있으므로 그대로 유지됨
-            });
-          }
-        } else {
-          showreelVideo.pause();
-          showreelSec.classList.remove('is-playing');
-          showreelIcon.innerHTML = '▶';
-          showreelIcon.style.fontSize = '20px';
-          showreelText.innerText = 'Play Showreel';
-        }
-      });
-    }
-  });
-</script>
 
 <div class="sec-white" id="about" data-watermark="WHAT WE DO">
   <div class="sec-header">
@@ -712,28 +735,24 @@ footer {
     <div class="proj-nav prev">←</div>
     <div class="proj-nav next">→</div>
     <div class="proj-list" id="projSlider">
-      <!-- Item 1: Flexible Video (mp4 with poster) -->
       <div class="proj-item">
         <video class="proj-media" loop muted playsinline poster="https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=800">
           <source src="https://videos.pexels.com/video-files/4006114/4006114-uhd_2732_1440_25fps.mp4" type="video/mp4">
         </video>
         <div class="proj-content"><div class="proj-genre">Film · Development</div><div class="proj-title">영감</div><div class="proj-title-en">Inspiration</div><p class="proj-note">웹툰 원작. 위즈덤하우스 판권. 로케트필름 공동제작 확정.</p><div class="proj-badges"><span class="proj-badge">공동제작 확정</span><span class="proj-badge">27년 개봉 목표</span></div></div>
       </div>
-      <!-- Item 2: Flexible Video (mp4 with poster) -->
       <div class="proj-item guard-card">
         <video class="proj-media" loop muted playsinline poster="https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=800">
           <source src="https://videos.pexels.com/video-files/3163534/3163534-uhd_2560_1440_30fps.mp4" type="video/mp4">
         </video>
         <div class="proj-content"><div class="proj-genre">Short-form Drama</div><div class="proj-title">최애의 경호 외 6건</div><div class="proj-title-en">Short Series</div><p class="proj-note">㈜키노필름 협업.</p><div class="proj-badges"><span class="proj-badge">제작 협업 진행</span></div></div>
       </div>
-      <!-- Item 3: Flexible Video (mp4 with poster) -->
       <div class="proj-item">
         <video class="proj-media" loop muted playsinline poster="https://images.pexels.com/photos/10312631/pexels-photo-10312631.jpeg?auto=compress&cs=tinysrgb&w=800">
           <source src="https://videos.pexels.com/video-files/8051284/8051284-hd_1920_1080_25fps.mp4" type="video/mp4">
         </video>
         <div class="proj-content"><div class="proj-genre">Web Novel</div><div class="proj-title">이른 밤, 무희에게 총애를</div><div class="proj-title-en">Web Novel IP</div><p class="proj-note">KT블라이스 유료 연재. 판타지 로맨스 장르 월간 1위(1·2월). 25년 8월 완결.</p><div class="proj-badges"></div></div>
       </div>
-      <!-- Item 4: Flexible Media Demonstration (fallback to image/gif is fully supported by using IMG) -->
       <div class="proj-item">
         <img class="proj-media" src="https://images.pexels.com/photos/3380805/pexels-photo-3380805.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Animated Poster Example">
         <div class="proj-content"><div class="proj-genre">Drama · 6-Part</div><div class="proj-title">영화 〈자리〉</div><div class="proj-title-en">The Place · Series</div><p class="proj-note">대본 기획. 콘진원 우수기획안 선정. 26년 하반기 편성 목표.</p><div class="proj-badges"></div></div>
@@ -748,45 +767,45 @@ footer {
     <div class="sec-title">News & Press</div>
   </div>
   <div class="news-list">
-
     <div class="news-row">
       <div class="news-thumb"><img src="https://images.pexels.com/photos/1738641/pexels-photo-1738641.jpeg?auto=compress&cs=tinysrgb&w=400" alt="News"></div>
-      <div class="news-date">2026. 05</div>
+      <div class="news-date">2026. 05.</div>
       <div class="news-cat">IP Launch</div>
       <div class="news-title">
-        웹소설 &lt;피리를 불면 몬스터가 따라옴&gt;
-        <span class="news-sub">· 네이버 시리즈 런칭 · 작가컴퍼니 유통</span>
+        웹소설 &lt;리코더를 불면 몬스터가 따라옴&gt; 기획
+        <span class="news-sub">· 네이버 시리즈 런칭 확정 · 작가컴퍼니 유통</span>
       </div>
     </div>
 
     <a class="news-row" href="https://naver.me/GHVWT0mD" target="_blank">
       <div class="news-thumb"><img src="https://images.pexels.com/photos/3380805/pexels-photo-3380805.jpeg?auto=compress&cs=tinysrgb&w=400" alt="News"></div>
-      <div class="news-date">2026. 03</div>
+      <div class="news-date">2025. 08.</div>
       <div class="news-cat">Production</div>
       <div class="news-title">
-        영화 &lt;영감&gt; 공동제작 확정
+        영화 &lt;영감&gt; 기획 · 제작
+        <span class="news-sub">· (주)로케트필름 공동제작 확정 · 2027년 상반기 촬영 예정</span>
       </div>
     </a>
 
     <a class="news-row" href="https://www.gosiweek.com/article/1065572300405771" target="_blank">
       <div class="news-thumb"><img src="https://images.pexels.com/photos/2510428/pexels-photo-2510428.jpeg?auto=compress&cs=tinysrgb&w=400" alt="News"></div>
-      <div class="news-date">2026. 03</div>
+      <div class="news-date">2025. 11.</div>
       <div class="news-cat">Press</div>
       <div class="news-title">
-        경찰청 ‘실종경보 홍보영상’ 첫 공개… “국민이 골든타임을 지켰다”
+        경찰청 실종경보 홍보영상 기획 · 제작
+        <span class="news-sub">· 경찰청 ‘실종경보 홍보영상’ 첫 공개… “국민이 골든타임을 지켰다”</span>
       </div>
     </a>
 
     <div class="news-row">
       <div class="news-thumb"><img src="https://images.pexels.com/photos/10312631/pexels-photo-10312631.jpeg?auto=compress&cs=tinysrgb&w=400" alt="News"></div>
-      <div class="news-date">2024. 02</div>
+      <div class="news-date">2024. 12.</div>
       <div class="news-cat">IP News</div>
       <div class="news-title">
-        웹소설 '이른 밤, 무희에게 총애를'
+        웹소설 &lt;이른 밤, 무희에게 총애를&gt; 기획 · 유통
         <span class="news-sub">· 블라이스 판타지 로맨스 장르 월간 1위 (2024년 1·2월)</span>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -873,7 +892,10 @@ footer {
   </div>
 </div>
 
-<footer><div class="ft-copy">© 2025 Studio Ground Inc. · 스튜디오그라운드 주식회사</div><div class="ft-tag">Stories. Grounded.</div></footer>
+<footer>
+  <div class="ft-copy">© 2025 Studio Ground Inc. · 스튜디오그라운드 주식회사</div>
+  <div class="ft-tag">Stories. Grounded.</div>
+</footer>
 
 </body>
 </html>
