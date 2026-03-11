@@ -120,49 +120,33 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 /* ══════════════════════════
    VIDEOS (Showreel)
 ══════════════════════════ */
-.sec-video {
-  position: relative; width: 100%; height: 82vh; min-height: 520px; overflow: hidden;
-  background-color: #000;
-  display: flex; align-items: center; justify-content: center;
-  border-bottom: 1px solid var(--line);
-}
-.showreel-poster {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5;
-  transition: opacity 0.8s, transform 3s ease-out;
-}
-.sec-video:hover .showreel-poster { opacity: 0.7; transform: scale(1.03); }
-.sample-video {
-  position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto;
-  transform: translate(-50%, -50%); object-fit: cover; opacity: 0;
-  transition: opacity 0.8s; pointer-events: none;
-}
+<div class="sec-video" id="showreel" style="cursor:pointer;">
+  <img
+    class="showreel-poster"
+    id="showreel-poster"
+    src="https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=1920"
+    alt="Showreel Preview"
+  >
 
-/* Showreel Playing State */
-.sec-video.is-playing .showreel-poster { opacity: 0; }
-.sec-video.is-playing .sample-video { opacity: 1; }
-.sec-video.is-playing .video-text { opacity: 0; transition: opacity 0.4s; }
-.sec-video.is-playing .play-btn { opacity: 0; transition: opacity 0.4s; }
-.sec-video.is-playing:hover .play-btn { opacity: 1; border-color: transparent; }
+  <video
+    id="showreel-video"
+    class="sample-video"
+    loop
+    muted
+    playsinline
+    preload="metadata"
+    poster="https://images.pexels.com/photos/3128274/pexels-photo-3128274.jpeg?auto=compress&cs=tinysrgb&w=1920"
+  >
+    <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4" type="video/mp4">
+  </video>
 
-.video-overlay {
-  position: relative; z-index: 10; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px;
-}
-.play-btn {
-  width: 92px; height: 92px; border-radius: 50%; border: 1px dashed rgba(255,255,255,0.4);
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); backdrop-filter: blur(4px); position: relative;
-}
-.play-btn::before {
-  content: ''; position: absolute; inset: 0; border-radius: 50%; background: rgba(140, 28, 42, 0.8);
-  opacity: 0; transition: opacity 0.5s; z-index: -1;
-}
-.play-btn .play-icon { color: #fff; font-size: 20px; margin-left: 4px; transition: transform 0.4s; }
-.video-overlay:hover .play-btn { transform: scale(1.1) rotate(90deg); border-color: transparent; }
-.video-overlay:hover .play-btn::before { opacity: 1; }
-.video-overlay:hover .play-btn .play-icon { transform: rotate(-90deg) scale(1.2); }
-.video-text {
-  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: #fff;
-}
+  <div class="video-overlay">
+    <div class="play-btn">
+      <div class="play-icon" id="showreel-icon">▶</div>
+    </div>
+    <div class="video-text" id="showreel-text">Play Showreel</div>
+  </div>
+</div>
 
 /* ══════════════════════════
    GLOBAL SECTIONS
