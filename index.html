@@ -375,6 +375,19 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 .news-row:hover { padding-left: 16px; background: rgba(255,255,255,0.02); }
 .sec-white .news-row:hover { background: rgba(0,0,0,0.02); }
 
+.news-row.notice-row {
+  background: rgba(140, 28, 42, 0.04);
+}
+
+.sec-white .news-row.notice-row {
+  background: rgba(140, 28, 42, 0.04);
+}
+
+.news-row.notice-row .news-cat {
+  color: var(--burgundy);
+  font-weight: 700;
+}
+
 .news-thumb { display: none; width: 140px; height: 80px; overflow: hidden; border-radius: 4px; }
 .sec-white .news-thumb { display: block; }
 .news-thumb img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: filter 0.4s, transform 0.4s; }
@@ -577,6 +590,65 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
   padding: 8px 14px;
 }
 
+/* News Modal */
+.news-modal-content {
+  width: 90%;
+  max-width: 860px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: block;
+  background: #050505;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  position: relative;
+  transform: translateY(24px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.active .news-modal-content {
+  transform: translateY(0);
+}
+
+.news-modal-inner {
+  padding: 64px 48px 44px;
+}
+
+.news-modal-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.news-modal-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.news-modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  line-height: 1.25;
+  color: #fff;
+  margin-bottom: 28px;
+}
+
+.news-modal-body {
+  font-size: 16px;
+  line-height: 1.95;
+  color: rgba(255,255,255,0.84);
+}
+
+.news-modal-body p + p {
+  margin-top: 18px;
+}
+
 /* Contact & Ending Scene */
 .sec-contact {
   background: #2F2628; position: relative; border-top: 1px solid var(--line);
@@ -584,7 +656,7 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 }
 .sec-contact::before {
   content: ''; position: absolute; inset: 0;
-  background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  background-image: url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E');
   opacity: 0.02; mix-blend-mode: screen; pointer-events: none; z-index: 1;
 }
 .sec-contact::after {
@@ -638,9 +710,21 @@ nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--line
 
 /* Footer */
 footer {
-  background: #000; padding: 40px 64px; display: flex; justify-content: space-between; align-items: center;
+  background: #000;
+  padding: 40px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
 }
-.ft-copy { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--ink-soft); letter-spacing: 2px; }
+.ft-copy {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 2px;
+  line-height: 1.9;
+}
 .ft-tag { font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: #fff; }
 
 .fade-up {
@@ -689,6 +773,14 @@ footer {
 
   .modal-name {
     font-size: 32px;
+  }
+
+  .news-modal-inner {
+    padding: 56px 24px 28px;
+  }
+
+  .news-modal-title {
+    font-size: 30px;
   }
 }
 </style>
@@ -834,32 +926,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const showreelIcon = document.getElementById('showreel-icon');
   const showreelText = document.getElementById('showreel-text');
 
-  if (!showreelSec || !showreelVideo || !showreelIcon || !showreelText) return;
+  if (showreelSec && showreelVideo && showreelIcon && showreelText) {
+    showreelSec.addEventListener('click', () => {
+      if (showreelText.innerText === 'Preview Unavailable') return;
 
-  showreelSec.addEventListener('click', () => {
-    if (showreelText.innerText === 'Preview Unavailable') return;
-
-    if (showreelVideo.paused) {
-      showreelVideo.play().then(() => {
-        showreelSec.classList.add('is-playing');
-        showreelIcon.innerHTML = '❚❚';
-        showreelIcon.style.fontSize = '12px';
-        showreelText.innerText = 'Pause Showreel';
-      }).catch((error) => {
-        console.error('Video load or play failed:', error);
+      if (showreelVideo.paused) {
+        showreelVideo.play().then(() => {
+          showreelSec.classList.add('is-playing');
+          showreelIcon.innerHTML = '❚❚';
+          showreelIcon.style.fontSize = '12px';
+          showreelText.innerText = 'Pause Showreel';
+        }).catch((error) => {
+          console.error('Video load or play failed:', error);
+          showreelSec.classList.remove('is-playing');
+          showreelIcon.innerHTML = '✕';
+          showreelIcon.style.fontSize = '16px';
+          showreelText.innerText = 'Preview Unavailable';
+        });
+      } else {
+        showreelVideo.pause();
         showreelSec.classList.remove('is-playing');
-        showreelIcon.innerHTML = '✕';
-        showreelIcon.style.fontSize = '16px';
-        showreelText.innerText = 'Preview Unavailable';
-      });
-    } else {
-      showreelVideo.pause();
-      showreelSec.classList.remove('is-playing');
-      showreelIcon.innerHTML = '▶';
-      showreelIcon.style.fontSize = '20px';
-      showreelText.innerText = 'Play Showreel';
-    }
-  });
+        showreelIcon.innerHTML = '▶';
+        showreelIcon.style.fontSize = '20px';
+        showreelText.innerText = 'Play Showreel';
+      }
+    });
+  }
 
   const teamRows = document.querySelectorAll('.team-row');
   const teamModal = document.getElementById('teamModal');
@@ -891,6 +983,13 @@ document.addEventListener('DOMContentLoaded', () => {
         teamModal.classList.add('active');
         document.body.classList.add('modal-open');
       });
+
+      row.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          row.click();
+        }
+      });
     });
 
     teamModalClose.addEventListener('click', () => {
@@ -904,14 +1003,47 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('modal-open');
       }
     });
+  }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && teamModal.classList.contains('active')) {
-        teamModal.classList.remove('active');
-        document.body.classList.remove('modal-open');
+  const noticeRow = document.getElementById('hqNoticeRow');
+  const newsModal = document.getElementById('newsModal');
+  const newsModalClose = document.getElementById('newsModalClose');
+
+  if (noticeRow && newsModal && newsModalClose) {
+    const openNewsModal = () => {
+      newsModal.classList.add('active');
+      document.body.classList.add('modal-open');
+    };
+
+    const closeNewsModal = () => {
+      newsModal.classList.remove('active');
+      document.body.classList.remove('modal-open');
+    };
+
+    noticeRow.addEventListener('click', openNewsModal);
+    noticeRow.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openNewsModal();
+      }
+    });
+
+    newsModalClose.addEventListener('click', closeNewsModal);
+
+    newsModal.addEventListener('click', (e) => {
+      if (e.target === newsModal) {
+        closeNewsModal();
       }
     });
   }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const activeOverlays = document.querySelectorAll('.modal-overlay.active');
+      activeOverlays.forEach(modal => modal.classList.remove('active'));
+      document.body.classList.remove('modal-open');
+    }
+  });
 });
 </script>
 
@@ -1021,9 +1153,19 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="sec-title">News & Press</div>
   </div>
   <div class="news-list">
+    <div class="news-row notice-row" id="hqNoticeRow" tabindex="0" role="button" aria-label="본점 이전 안내 상세 보기">
+      <div class="news-thumb"><img src="https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Studio Ground Notice"></div>
+      <div class="news-date">2026. 03.</div>
+      <div class="news-cat">Notice</div>
+      <div class="news-title">
+        [공지] 주식회사 스튜디오그라운드 본점 이전 안내
+        <span class="news-sub">· 2026년 3월 17일부 김포 본점 이전 · 클릭하여 상세 내용 확인</span>
+      </div>
+    </div>
+
     <div class="news-row">
       <div class="news-thumb"><img src="https://images.pexels.com/photos/1738641/pexels-photo-1738641.jpeg?auto=compress&cs=tinysrgb&w=400" alt="News"></div>
-      <div class="news-date">2026. 05.</div>
+      <div class="news-date">2026. 02.</div>
       <div class="news-cat">IP Launch</div>
       <div class="news-title">
         웹소설 &lt;리코더를 불면 몬스터가 따라옴&gt; 기획
@@ -1160,15 +1302,18 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="rep-label">Studio Ground Inc.</div>
       <div class="co-info">
         <div>Founded 2023</div>
-        <div style="margin-top: 16px;">Incheon, Korea</div>
-        <div>POSCO Tower Songdo</div>
+        <div style="margin-top: 16px;">경기도 김포시 김포한강1로 250</div>
+        <div>2층 213호 (운양동)</div>
       </div>
     </div>
   </div>
 </div>
 
 <footer>
-  <div class="ft-copy">© 2026 Studio Ground Inc. · 스튜디오그라운드 주식회사</div>
+  <div class="ft-copy">
+    © 2026 Studio Ground Inc. · 스튜디오그라운드 주식회사<br>
+    경기도 김포시 김포한강1로 250, 2층 213호 (운양동)
+  </div>
   <div class="ft-tag">Stories. Grounded.</div>
 </footer>
 
@@ -1187,6 +1332,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <div class="modal-section-title">Credits</div>
       <div class="modal-credits" id="teamModalCredits"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="newsModal" aria-hidden="true">
+  <div class="news-modal-content">
+    <button class="modal-close" id="newsModalClose" aria-label="닫기">✕</button>
+    <div class="news-modal-inner">
+      <div class="news-modal-role">Notice</div>
+      <div class="news-modal-date">2026. 03. 17.</div>
+      <div class="news-modal-title">[공지] 주식회사 스튜디오그라운드 본점 이전 안내</div>
+      <div class="news-modal-body">
+        <p>안녕하세요, 주식회사 스튜디오그라운드입니다.</p>
+        <p>당사가 새로운 도약을 위해 사옥을 김포로 이전하게 되었습니다.</p>
+        <p>이전과 함께 사업자등록 정보가 변경되었으니, 거래처 및 관계자 여러분께서는 아래 내용을 확인하시어 업무에 참고해 주시기 바랍니다.</p>
+        <p><strong>변경 주소:</strong><br>경기도 김포시 김포한강1로 250, 2층 213호(운양동)</p>
+        <p><strong>변경일:</strong><br>2026년 3월 17일부</p>
+        <p><strong>안내 사항:</strong><br>이후 발행되는 모든 전자세금계산서 및 우편물은 변경된 주소지로 처리 부탁드립니다.</p>
+        <p>전화번호 및 이메일 주소는 기존과 동일합니다. (변경 시 수정 입력)</p>
+        <p>새로운 터전에서 더 좋은 작품과 서비스로 보답하겠습니다.</p>
+        <p>감사합니다.</p>
+        <p>주식회사 스튜디오그라운드 대표이사 이준호 배상</p>
+      </div>
     </div>
   </div>
 </div>
